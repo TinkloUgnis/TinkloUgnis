@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebStudio — Svetainių Kūrimas Lietuvos Verslams</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+function showTier(tier) {
+  document.querySelectorAll('.mockup-tier').forEach(el => el.classList.remove('active'));
+  document.getElementById('tier-' + tier).classList.add('active');
+  document.querySelectorAll('.tier-tab').forEach(btn => btn.classList.remove('active'));
+  const tabs = document.querySelectorAll('.tier-tab');
+  const tierMap = { starter: 0, medium: 1, premium: 2 };
+  if (tabs[tierMap[tier]]) tabs[tierMap[tier]].classList.add('active');
+  document.getElementById('mockup-viewer').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+<style>
+:root {
+  --ink: #0d0d0d;
+  --cream: #f5f0e8;
+  --gold: #c8a96e;
+  --gold-light: #e8d5a8;
+  --muted: #888880;
+  --border: rgba(200,169,110,0.25);
+  --steel: #2a3a52;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); overflow-x:hidden; }
+
+nav { position:fixed; top:0; width:100%; z-index:100; padding:20px 60px; display:flex; justify-content:space-between; align-items:center; background:rgba(245,240,232,0.92); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
+.logo { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:900; letter-spacing:-0.02em; }
+.logo span { color:var(--gold); }
+nav ul { list-style:none; display:flex; gap:40px; align-items:center; }
+nav a { text-decoration:none; color:var(--ink); font-size:0.85rem; font-weight:500; letter-spacing:0.07em; text-transform:uppercase; transition:color .2s; }
+nav a:hover { color:var(--gold); }
+.nav-cta { background:var(--ink); color:var(--cream)!important; padding:10px 24px; border-radius:2px; }
+.nav-cta:hover { background:var(--gold)!important; color:var(--ink)!important; }
+
+.hero { min-height:100vh; display:flex; align-items:center; padding:120px 60px 80px; position:relative; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(200,169,110,.12) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(42,58,82,.08) 0%,transparent 60%); }
+.hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; max-width:1300px; margin:0 auto; width:100%; position:relative; z-index:1; }
+.hero-eyebrow { display:flex; align-items:center; gap:12px; margin-bottom:28px; }
+.hero-eyebrow span { font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+.hero-line { width:40px; height:1px; background:var(--gold); }
+h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,5vw,5rem); font-weight:900; line-height:1.05; letter-spacing:-0.03em; margin-bottom:28px; }
+h1 em { font-style:italic; color:var(--gold); }
+.hero-sub { font-size:1.05rem; line-height:1.7; color:#555; max-width:460px; margin-bottom:48px; }
+.hero-btns { display:flex; gap:16px; align-items:center; }
+.btn-primary { background:var(--ink); color:var(--cream); padding:16px 36px; border:none; border-radius:2px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:background .25s,transform .2s; display:inline-block; }
+.btn-primary:hover { background:var(--gold); color:var(--ink); transform:translateY(-2px); }
+.btn-ghost { color:var(--ink); padding:16px 0; border:none; background:none; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:gap .2s; }
+.btn-ghost:hover { gap:14px; }
+
+.hero-visual { position:relative; height:540px; }
+.floating-card { position:absolute; border-radius:8px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.15),0 8px 24px rgba(0,0,0,.1); }
+.card-main { width:340px; height:220px; top:30px; left:30px; background:var(--steel); z-index:3; animation:float1 6s ease-in-out infinite; }
+.card-secondary { width:280px; height:180px; top:160px; left:180px; background:var(--ink); z-index:2; animation:float2 7s ease-in-out infinite .5s; }
+.card-tertiary { width:200px; height:140px; bottom:60px; left:20px; background:#2d1a0e; z-index:4; animation:float3 5s ease-in-out infinite 1s; }
+.mock-browser-bar { height:24px; background:rgba(255,255,255,.08); display:flex; align-items:center; padding:0 10px; gap:5px; }
+.mock-dot { width:6px; height:6px; border-radius:50%; }
+.mock-dot:nth-child(1){background:#ff5f57} .mock-dot:nth-child(2){background:#febc2e} .mock-dot:nth-child(3){background:#28c840}
+.mock-content { padding:12px; }
+.mock-hero-block { height:60px; background:linear-gradient(135deg,rgba(200,169,110,.3),rgba(200,169,110,.1)); border-radius:4px; margin-bottom:8px; }
+.mock-lines { display:flex; flex-direction:column; gap:5px; }
+.mock-line { height:6px; background:rgba(255,255,255,.15); border-radius:3px; }
+.mock-line.short{width:60%} .mock-line.shorter{width:40%}
+.mock-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; margin-top:8px; }
+.mock-card-sm { height:35px; background:rgba(255,255,255,.1); border-radius:3px; }
+
+.stats-strip { background:var(--ink); color:var(--cream); padding:28px 60px; display:flex; justify-content:center; gap:80px; }
+.stat { text-align:center; }
+.stat-num { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--gold); }
+.stat-label { font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,232,.6); margin-top:4px; }
+
+section { padding:100px 60px; }
+.section-label { display:inline-flex; align-items:center; gap:10px; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:20px; }
+.section-label::before { content:''; width:30px; height:1px; background:var(--gold); }
+h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3.2rem); font-weight:900; line-height:1.1; letter-spacing:-0.025em; }
+
+.packages { background:var(--ink); color:var(--cream); }
+.packages-header { max-width:1300px; margin:0 auto 70px; display:flex; justify-content:space-between; align-items:flex-end; }
+.packages-header p { max-width:420px; color:rgba(245,240,232,.55); line-height:1.7; font-size:1rem; }
+.packages-grid { max-width:1300px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:rgba(200,169,110,.1); border:1px solid rgba(200,169,110,.15); border-radius:4px; overflow:hidden; }
+.package-card { background:#111; padding:50px 40px; position:relative; transition:background .3s; cursor:pointer; }
+.package-card:hover { background:#161616; }
+.package-card.featured { background:#161616; border:2px solid var(--gold); margin:-2px; z-index:1; }
+.featured-badge { position:absolute; top:24px; right:24px; background:var(--gold); color:var(--ink); font-size:0.65rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:5px 10px; border-radius:2px; }
+.package-tier { font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+.package-name { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--cream); margin-bottom:8px; }
+.package-desc { font-size:0.82rem; color:rgba(245,240,232,.45); line-height:1.6; margin-top:8px; }
+.package-price { font-size:2.8rem; font-weight:700; font-family:'Playfair Display',serif; color:var(--gold); margin:20px 0 4px; }
+.package-price sup { font-size:1.2rem; vertical-align:super; font-family:'DM Sans',sans-serif; font-weight:400; }
+.package-price-note { font-size:0.78rem; color:var(--muted); margin-bottom:6px; }
+.hosting-note { font-size:0.72rem; color:rgba(200,169,110,.65); margin-bottom:20px; padding:8px 10px; border:1px solid rgba(200,169,110,.15); border-radius:2px; line-height:1.5; }
+.package-divider { height:1px; background:rgba(200,169,110,.15); margin:20px 0; }
+.package-features { list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:36px; }
+.package-features li { font-size:0.88rem; color:rgba(245,240,232,.7); display:flex; align-items:flex-start; gap:10px; line-height:1.5; }
+.feat-icon { color:var(--gold); font-size:0.9rem; flex-shrink:0; margin-top:1px; }
+.package-btn { width:100%; padding:14px 24px; border:1px solid rgba(200,169,110,.4); background:transparent; color:var(--cream); font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; border-radius:2px; transition:all .25s; margin-bottom:12px; display:block; text-align:center; text-decoration:none; }
+.package-btn:hover { background:var(--gold); color:var(--ink); border-color:var(--gold); }
+.package-btn.gold { background:var(--gold); color:var(--ink); border-color:var(--gold); }
+.package-btn.gold:hover { background:var(--cream); }
+.mockup-count { font-size:0.76rem; color:var(--muted); text-align:center; margin-top:8px; }
+
+#mockup-viewer { background:#0a0a0a; padding:80px 60px 100px; }
+.viewer-header { max-width:1300px; margin:0 auto 50px; display:flex; justify-content:space-between; align-items:flex-end; }
+.tier-tabs { display:flex; gap:4px; background:rgba(255,255,255,.04); padding:4px; border-radius:4px; }
+.tier-tab { padding:10px 24px; border:none; background:transparent; color:rgba(245,240,232,.4); font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; border-radius:2px; transition:all .2s; }
+.tier-tab.active { background:var(--gold); color:var(--ink); }
+.mockups-display { max-width:1300px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+.mockup-tier { display:none; }
+.mockup-tier.active { display:grid; }
+.mockup-frame { border-radius:8px; overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.05); transition:transform .4s,box-shadow .4s; cursor:pointer; position:relative; }
+.mockup-frame:hover { transform:translateY(-12px); box-shadow:0 60px 120px rgba(0,0,0,.6); }
+.mockup-frame .click-hint { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0); transition:background .3s; z-index:10; pointer-events:none; }
+.mockup-frame:hover .click-hint { background:rgba(0,0,0,.35); }
+.mockup-frame .click-hint span { opacity:0; transform:translateY(8px); transition:opacity .3s,transform .3s; font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; background:var(--gold); color:var(--ink); padding:12px 24px; border-radius:2px; }
+.mockup-frame:hover .click-hint span { opacity:1; transform:translateY(0); }
+/* Coming soon — not clickable */
+.mockup-frame.coming-soon { cursor:default; }
+.mockup-frame.coming-soon:hover { transform:none; box-shadow:0 40px 100px rgba(0,0,0,.5); }
+.mockup-frame.coming-soon .click-hint span { background:rgba(30,30,30,.85); color:rgba(245,240,232,.5); border:1px solid rgba(245,240,232,.15); }
+.mockup-frame.coming-soon:hover .click-hint { background:rgba(0,0,0,.2); }
+/* Modal */
+.demo-modal { position:fixed; inset:0; z-index:9999; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.7); backdrop-filter:blur(8px); }
+.demo-modal.open { display:flex; }
+.demo-modal-box { background:var(--ink); border:1px solid var(--border); padding:50px; text-align:center; max-width:420px; width:90%; }
+.demo-modal-icon { font-size:2.5rem; margin-bottom:16px; }
+.demo-modal-title { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--cream); margin-bottom:10px; }
+.demo-modal-text { font-size:0.88rem; color:var(--muted); line-height:1.6; margin-bottom:28px; }
+.demo-modal-close { background:transparent; border:1px solid rgba(200,169,110,.3); color:var(--cream); padding:10px 28px; font-family:'DM Sans',sans-serif; font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:border-color .2s,background .2s; }
+.demo-modal-close:hover { background:var(--gold); color:var(--ink); border-color:var(--gold); }
+.mock-browser { background:#1a1a1a; padding:10px 14px; display:flex; align-items:center; gap:8px; }
+.mbdot { width:10px; height:10px; border-radius:50%; }
+.mbdot:nth-child(1){background:#ff5f57} .mbdot:nth-child(2){background:#febc2e} .mbdot:nth-child(3){background:#28c840}
+.mock-url-bar { flex:1; height:22px; background:rgba(255,255,255,.06); border-radius:4px; margin-left:8px; }
+.mock-website { height:500px; overflow:hidden; position:relative; }
+.mockup-label { background:#111; padding:16px 20px; border-top:1px solid rgba(255,255,255,.05); }
+.mockup-label-tier { font-size:0.7rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
+.mockup-label-desc { font-size:0.82rem; color:rgba(245,240,232,.5); }
+
+/* STARTER 1 — RESTAURANT */
+.r { background:#faf6f0; font-family:'Cormorant Garamond',serif; }
+.r-nav { background:#1c0f00; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; }
+.r-logo { font-size:1.1rem; font-weight:600; color:#e8c878; letter-spacing:0.08em; font-style:italic; }
+.r-nav-links { display:flex; gap:18px; }
+.r-nav-links span { font-size:0.6rem; color:rgba(232,200,120,.5); letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; }
+.r-hero { display:grid; grid-template-columns:1fr 1fr; height:220px; }
+.r-hero-left { background:#2a1500; display:flex; flex-direction:column; justify-content:center; padding:24px 20px; }
+.r-hero-left h3 { font-size:2rem; font-weight:600; color:#faf6f0; line-height:1; margin-bottom:8px; font-style:italic; }
+.r-hero-left p { font-size:0.6rem; color:rgba(250,246,240,.4); margin-bottom:14px; font-family:'DM Sans',sans-serif; letter-spacing:0.08em; text-transform:uppercase; }
+.r-hero-btn { display:inline-block; background:#e8c878; color:#1c0f00; padding:8px 18px; font-size:0.6rem; font-family:'DM Sans',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; }
+.r-hero-right { background:linear-gradient(160deg,#5c3010 0%,#8c4820 50%,#4a2008 100%); display:flex; align-items:center; justify-content:center; font-size:4rem; }
+.r-menu { padding:16px 20px; }
+.r-menu-title { font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:#8c6030; margin-bottom:12px; font-family:'DM Sans',sans-serif; }
+.r-menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.r-item { border-bottom:1px solid #e8dcc8; padding-bottom:8px; }
+.r-item-top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:2px; }
+.r-item-name { font-size:0.82rem; font-weight:600; color:#1c0f00; }
+.r-item-price { font-size:0.75rem; color:#c07030; font-weight:600; }
+.r-item-desc { font-size:0.6rem; color:#a08060; font-family:'DM Sans',sans-serif; line-height:1.3; }
+.r-footer { background:#1c0f00; padding:10px 20px; display:flex; justify-content:space-between; }
+.r-footer span { font-size:0.55rem; color:rgba(232,200,120,.3); font-family:'DM Sans',sans-serif; }
+
+/* STARTER 2 — GYM */
+.g { background:#0a0a0a; font-family:'DM Sans',sans-serif; }
+.g-nav { background:#f0e000; padding:10px 20px; display:flex; justify-content:space-between; align-items:center; }
+.g-logo { font-size:1rem; font-weight:700; color:#0a0a0a; letter-spacing:-0.02em; text-transform:uppercase; }
+.g-nav-links { display:flex; gap:14px; }
+.g-nav-links span { font-size:0.58rem; font-weight:700; color:#0a0a0a; letter-spacing:0.08em; text-transform:uppercase; }
+.g-hero { display:grid; grid-template-columns:1fr 72px; }
+.g-hero-main { padding:20px; }
+.g-tag { background:#f0e000; display:inline-block; font-size:0.52rem; font-weight:700; padding:3px 8px; color:#0a0a0a; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; }
+.g-hero-main h3 { font-size:2.8rem; line-height:0.9; color:white; text-transform:uppercase; letter-spacing:-0.02em; margin-bottom:10px; font-weight:700; }
+.g-hero-main h3 em { font-style:normal; color:#f0e000; display:block; }
+.g-sub { font-size:0.58rem; color:#444; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.g-btns { display:flex; gap:8px; }
+.g-btn-y { background:#f0e000; color:#0a0a0a; padding:9px 18px; font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
+.g-btn-w { border:1px solid #222; color:#555; padding:8px 14px; font-size:0.58rem; text-transform:uppercase; }
+.g-side { background:#f0e000; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+.g-side span { font-size:0.48rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#0a0a0a; writing-mode:vertical-rl; }
+.g-stats { display:grid; grid-template-columns:1fr 1fr 1fr; border-top:2px solid #f0e000; }
+.g-stat { padding:10px 14px; border-right:1px solid #1a1a1a; }
+.g-stat:last-child { border-right:none; }
+.g-stat-num { font-size:1.4rem; color:#f0e000; line-height:1; font-weight:700; }
+.g-stat-lbl { font-size:0.48rem; color:#444; text-transform:uppercase; letter-spacing:0.1em; margin-top:2px; }
+.g-schedule { padding:12px 20px; }
+.g-sched-title { font-size:0.52rem; color:#f0e000; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:8px; }
+.g-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #1a1a1a; align-items:center; }
+.g-row:last-child { border-bottom:none; }
+.g-class { font-size:0.62rem; color:white; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; }
+.g-time { font-size:0.56rem; color:#555; }
+.g-tag-sm { background:#1a1a1a; color:#f0e000; font-size:0.46rem; padding:2px 6px; text-transform:uppercase; }
+
+/* PROFESSIONAL 1 — BEAUTY SALON */
+.b { background:#fdf8f5; font-family:'Cormorant Garamond',serif; }
+.b-top { background:#e8d5c4; padding:5px 0; text-align:center; }
+.b-top span { font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:#7a5c4a; font-family:'DM Sans',sans-serif; }
+.b-nav { background:#fdf8f5; padding:11px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f0e0d0; }
+.b-logo { font-size:1.2rem; font-weight:600; color:#2a1a14; letter-spacing:0.05em; font-style:italic; }
+.b-nav-links { display:flex; gap:16px; }
+.b-nav-links span { font-size:0.55rem; letter-spacing:0.14em; text-transform:uppercase; color:#9a8070; font-family:'DM Sans',sans-serif; }
+.b-hero { display:grid; grid-template-columns:1fr 1.1fr; height:210px; }
+.b-hero-left { background:#f5e8dc; display:flex; flex-direction:column; justify-content:center; padding:22px 20px; }
+.b-hero-tag { font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:#b07a60; margin-bottom:8px; font-family:'DM Sans',sans-serif; }
+.b-hero-left h3 { font-size:1.8rem; font-weight:600; color:#2a1a14; line-height:1.05; margin-bottom:8px; font-style:italic; }
+.b-hero-left p { font-size:0.6rem; color:#9a8070; line-height:1.5; margin-bottom:12px; font-family:'DM Sans',sans-serif; }
+.b-hero-btn { display:inline-block; background:#2a1a14; color:#fdf8f5; padding:7px 16px; font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; }
+.b-hero-right { background:linear-gradient(160deg,#d4a896 0%,#c08070 50%,#e8c4b0 100%); display:flex; align-items:center; justify-content:center; font-size:4rem; }
+.b-services { padding:14px 20px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.b-service { padding:10px; border-top:1px solid #e8d5c4; }
+.b-service-name { font-size:0.78rem; font-weight:600; color:#2a1a14; margin-bottom:2px; }
+.b-service-price { font-size:0.6rem; color:#b07a60; font-weight:500; font-family:'DM Sans',sans-serif; }
+.b-service-desc { font-size:0.55rem; color:#b0978a; margin-top:3px; line-height:1.3; font-family:'DM Sans',sans-serif; }
+.b-testimonial { background:#f5e8dc; margin:0 20px 14px; padding:12px 14px; border-left:2px solid #c08070; }
+.b-testimonial p { font-size:0.7rem; color:#5a3a2a; font-style:italic; line-height:1.5; margin-bottom:6px; }
+.b-testimonial span { font-size:0.55rem; color:#9a8070; font-family:'DM Sans',sans-serif; }
+.b-footer { background:#2a1a14; padding:10px 20px; display:flex; justify-content:space-between; }
+.b-footer span { font-size:0.52rem; color:rgba(253,248,245,.3); font-family:'DM Sans',sans-serif; }
+
+/* PROFESSIONAL 2 — ACCOUNTING */
+.a { background:#ffffff; font-family:'IBM Plex Sans',sans-serif; }
+.a-nav { background:#00205c; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; }
+.a-logo-box { display:flex; align-items:center; gap:8px; }
+.a-logo-mark { width:20px; height:20px; background:white; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.a-logo-mark span { font-size:0.58rem; font-weight:700; color:#00205c; }
+.a-logo-text { font-size:0.72rem; font-weight:500; color:white; letter-spacing:0.08em; text-transform:uppercase; }
+.a-nav-links { display:flex; gap:18px; align-items:center; }
+.a-nav-links span { font-size:0.55rem; color:rgba(255,255,255,.45); letter-spacing:0.06em; text-transform:uppercase; }
+.a-cta-btn { background:white; color:#00205c; padding:5px 12px; font-size:0.55rem; font-weight:600; }
+.a-hero { display:grid; grid-template-columns:4px 1fr; }
+.a-accent { background:#00205c; }
+.a-hero-content { padding:22px 20px; }
+.a-overline { font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:#00205c; font-weight:600; margin-bottom:8px; }
+.a-hero-content h3 { font-size:1.2rem; font-weight:300; color:#0a0a1a; line-height:1.3; margin-bottom:8px; }
+.a-hero-content h3 strong { font-weight:600; }
+.a-hero-content p { font-size:0.6rem; color:#6a6a7a; line-height:1.6; margin-bottom:14px; }
+.a-btn { display:inline-block; background:#00205c; color:white; padding:7px 18px; font-size:0.56rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; }
+.a-services { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid #e8e8f0; }
+.a-service-cell { padding:12px 14px; border-right:1px solid #e8e8f0; }
+.a-service-cell:last-child { border-right:none; }
+.a-service-num { font-size:0.5rem; color:#00205c; font-weight:600; letter-spacing:0.12em; margin-bottom:5px; }
+.a-service-title { font-size:0.68rem; font-weight:500; color:#0a0a1a; margin-bottom:3px; }
+.a-service-sub { font-size:0.52rem; color:#9090a0; line-height:1.4; }
+.a-data { background:#f4f6fb; border-top:1px solid #e0e4f0; display:grid; grid-template-columns:1fr 1fr 1fr; }
+.a-data-cell { padding:12px 16px; border-right:1px solid #e0e4f0; }
+.a-data-cell:last-child { border-right:none; }
+.a-data-num { font-size:1.2rem; font-weight:300; color:#00205c; }
+.a-data-label { font-size:0.5rem; color:#8888a0; text-transform:uppercase; letter-spacing:0.1em; margin-top:2px; }
+.a-footer { background:#00205c; padding:10px 20px; display:flex; justify-content:space-between; }
+.a-footer span { font-size:0.5rem; color:rgba(255,255,255,.35); }
+
+/* PREMIUM 1 — LAW FIRM */
+.l { background:#f8f6f2; font-family:'DM Sans',sans-serif; }
+.l-nav { background:#12122a; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; }
+.l-logo { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:white; }
+.l-logo span { color:#c8a96e; }
+.l-nav-links { display:flex; gap:14px; align-items:center; }
+.l-nav-links span { font-size:0.58rem; color:rgba(255,255,255,.4); letter-spacing:0.07em; }
+.l-nav-cta { background:#c8a96e; color:#12122a; padding:5px 12px; font-size:0.58rem; font-weight:700; }
+.l-hero { background:linear-gradient(135deg,#12122a 0%,#1e1e3a 60%,#12122a 100%); padding:26px 20px; position:relative; overflow:hidden; }
+.l-hero::before { content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; border-radius:50%; background:rgba(200,169,110,.06); }
+.l-eyebrow { font-size:0.55rem; letter-spacing:0.18em; text-transform:uppercase; color:#c8a96e; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.l-eyebrow::before { content:''; width:16px; height:1px; background:#c8a96e; }
+.l-hero h3 { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:900; color:white; line-height:1.15; margin-bottom:8px; position:relative; }
+.l-hero p { font-size:0.6rem; color:rgba(255,255,255,.4); line-height:1.6; margin-bottom:14px; max-width:300px; position:relative; }
+.l-hero-btns { display:flex; gap:8px; position:relative; }
+.l-btn-gold { background:#c8a96e; color:#12122a; padding:8px 16px; font-size:0.6rem; font-weight:700; }
+.l-btn-out { border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.5); padding:7px 14px; font-size:0.58rem; }
+.l-services { padding:14px 20px; }
+.l-services-title { font-family:'Playfair Display',serif; font-size:0.82rem; font-weight:700; color:#12122a; margin-bottom:10px; }
+.l-services-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.l-service-card { background:white; padding:10px 12px; box-shadow:0 2px 8px rgba(0,0,0,.05); border-left:2px solid #c8a96e; }
+.l-service-name { font-size:0.65rem; font-weight:700; color:#12122a; margin-bottom:3px; }
+.l-service-desc { font-size:0.56rem; color:#888; line-height:1.4; }
+.l-trust { background:#12122a; padding:12px 20px; display:flex; justify-content:space-around; }
+.l-trust-item { text-align:center; }
+.l-trust-num { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:#c8a96e; }
+.l-trust-lbl { font-size:0.5rem; color:rgba(255,255,255,.3); text-transform:uppercase; letter-spacing:0.06em; margin-top:2px; }
+
+/* PREMIUM 2 — WEDDING PHOTOGRAPHY */
+.p { background:#0e0c0a; font-family:'DM Sans',sans-serif; }
+.p-nav { background:rgba(14,12,10,.7); padding:12px 20px; display:flex; justify-content:space-between; align-items:center; position:absolute; width:100%; z-index:3; }
+.p-logo { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:400; color:white; letter-spacing:0.12em; text-transform:uppercase; font-style:italic; }
+.p-nav-links { display:flex; gap:14px; }
+.p-nav-links span { font-size:0.52rem; color:rgba(255,255,255,.4); letter-spacing:0.14em; text-transform:uppercase; }
+.p-hero { position:relative; height:275px; overflow:hidden; }
+.p-hero-bg { width:100%; height:100%; background:linear-gradient(135deg,#1a1208 0%,#2d2016 35%,#1a1208 70%,#0a0806 100%); position:relative; }
+.p-hero-bg::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 60% 40%,rgba(200,160,80,.15) 0%,transparent 70%); }
+.p-bg-text { position:absolute; top:26px; left:16px; font-family:'Cormorant Garamond',serif; font-size:3.8rem; font-weight:400; color:rgba(255,255,255,.05); line-height:1; text-transform:uppercase; }
+.p-content { position:absolute; bottom:20px; left:20px; z-index:3; }
+.p-eyebrow { font-size:0.5rem; letter-spacing:0.22em; text-transform:uppercase; color:#c8a060; margin-bottom:6px; }
+.p-content h3 { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:600; color:white; line-height:1.05; font-style:italic; }
+.p-content h3 em { font-style:normal; display:block; font-size:0.85rem; color:rgba(255,255,255,.35); font-weight:300; margin-top:3px; font-family:'DM Sans',sans-serif; letter-spacing:0.06em; }
+.p-cta { display:inline-block; margin-top:10px; border-bottom:1px solid #c8a060; color:#c8a060; font-size:0.52rem; letter-spacing:0.16em; text-transform:uppercase; padding-bottom:3px; }
+.p-gallery { display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:2px; height:110px; }
+.p-gal-a { background:linear-gradient(135deg,#2d2010,#4a3418); position:relative; }
+.p-gal-b { background:linear-gradient(135deg,#1a1a14,#2d2a1e); position:relative; }
+.p-gal-c { background:linear-gradient(135deg,#0e1218,#1a2028); position:relative; }
+.p-gal-label { position:absolute; bottom:6px; left:7px; font-size:0.48rem; color:rgba(255,255,255,.45); letter-spacing:0.1em; text-transform:uppercase; }
+.p-info { background:#0e0c0a; padding:10px 20px; display:flex; justify-content:space-between; border-top:1px solid rgba(200,160,80,.1); }
+.p-info-item { text-align:center; }
+.p-info-num { font-family:'Cormorant Garamond',serif; font-size:1rem; color:#c8a060; font-weight:600; }
+.p-info-lbl { font-size:0.46rem; color:rgba(255,255,255,.2); letter-spacing:0.1em; text-transform:uppercase; margin-top:1px; }
+
+/* PROCESS */
+.process { background:var(--cream); }
+.process-inner { max-width:1300px; margin:0 auto; }
+.process-header { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; margin-bottom:70px; }
+.process-header p { color:#666; line-height:1.7; font-size:1rem; padding-top:20px; }
+.process-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:30px; position:relative; }
+.process-steps::before { content:''; position:absolute; top:30px; left:12%; right:12%; height:1px; background:linear-gradient(to right,transparent,var(--gold-light),transparent); }
+.process-step { text-align:center; }
+.step-num { width:60px; height:60px; border-radius:50%; background:var(--ink); color:var(--gold); font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; position:relative; z-index:1; }
+.step-title { font-weight:700; font-size:0.95rem; margin-bottom:10px; }
+.step-desc { font-size:0.85rem; color:#777; line-height:1.6; }
+
+/* TESTIMONIALS */
+.testimonials { background:#f5f0e8; padding:100px 60px; }
+.testimonials-inner { max-width:1300px; margin:0 auto; }
+.testimonials-header { margin-bottom:50px; }
+.testimonials-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
+.testimonial-card { background:white; padding:32px; border-radius:4px; box-shadow:0 4px 24px rgba(0,0,0,.06); border-top:3px solid var(--gold); }
+.testimonial-quote { font-size:2rem; color:var(--gold); line-height:1; margin-bottom:16px; font-family:'Playfair Display',serif; }
+.testimonial-text { font-size:0.9rem; line-height:1.7; color:#555; margin-bottom:24px; font-style:italic; }
+.testimonial-author { display:flex; align-items:center; gap:14px; }
+.author-avatar { width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--ink),var(--steel)); display:flex; align-items:center; justify-content:center; color:var(--gold); font-family:'Playfair Display',serif; font-weight:700; font-size:0.9rem; flex-shrink:0; }
+.author-name { font-weight:700; font-size:0.88rem; }
+.author-company { font-size:0.75rem; color:var(--muted); margin-top:2px; }
+
+/* CTA */
+.cta-section { background:var(--ink); padding:120px 60px; text-align:center; position:relative; overflow:hidden; }
+.cta-section::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(200,169,110,.08) 0%,transparent 70%); }
+.cta-section h2 { color:var(--cream); max-width:700px; margin:0 auto 20px; }
+.cta-section p { color:rgba(245,240,232,.5); max-width:520px; margin:0 auto 32px; line-height:1.7; }
+.hosting-callout { background:rgba(200,169,110,.08); border:1px solid rgba(200,169,110,.2); border-radius:4px; padding:16px 24px; max-width:580px; margin:0 auto 36px; color:rgba(245,240,232,.6); font-size:0.82rem; line-height:1.6; position:relative; z-index:1; }
+.hosting-callout strong { color:var(--gold); }
+.cta-actions { display:flex; gap:16px; justify-content:center; position:relative; z-index:1; flex-wrap:wrap; }
+.btn-gold { background:var(--gold); color:var(--ink); padding:16px 40px; border:none; border-radius:2px; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:background .25s,transform .2s; display:inline-block; }
+.btn-gold:hover { background:var(--gold-light); transform:translateY(-2px); }
+
+/* FOOTER */
+footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px; }
+.footer-inner { max-width:1300px; margin:0 auto; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:60px; margin-bottom:50px; }
+.footer-brand .logo { font-size:1.2rem; margin-bottom:16px; display:block; }
+.footer-brand p { font-size:0.82rem; line-height:1.7; color:rgba(245,240,232,.35); max-width:280px; }
+.footer-hosting { font-size:0.72rem; color:rgba(200,169,110,.4); margin-top:10px; }
+.footer-col h5 { font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+.footer-col ul { list-style:none; }
+.footer-col li { margin-bottom:10px; }
+.footer-col a { text-decoration:none; color:rgba(245,240,232,.35); font-size:0.83rem; transition:color .2s; }
+.footer-col a:hover { color:var(--gold); }
+.footer-bottom { border-top:1px solid rgba(200,169,110,.1); padding-top:28px; display:flex; justify-content:space-between; }
+.footer-bottom span { font-size:0.78rem; }
+
+/* PORTFOLIO PLACEHOLDER SECTION */
+.portfolio-section { background:var(--ink); padding:100px 60px; }
+.portfolio-inner { max-width:1300px; margin:0 auto; }
+.portfolio-header { margin-bottom:60px; }
+.portfolio-header h2 { color:var(--cream); margin-bottom:16px; }
+.portfolio-header p { color:rgba(245,240,232,.45); font-size:1rem; line-height:1.7; max-width:480px; margin-top:12px; }
+.portfolio-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.portfolio-slot { border:1px dashed rgba(200,169,110,.25); border-radius:8px; overflow:hidden; transition:border-color .3s,transform .3s; cursor:pointer; }
+.portfolio-slot:hover { border-color:rgba(200,169,110,.6); transform:translateY(-4px); }
+.portfolio-slot.slot-featured { border-color:rgba(200,169,110,.4); }
+.slot-inner { padding:48px 36px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px; }
+.slot-icon { font-size:1.4rem; color:rgba(200,169,110,.3); }
+.portfolio-slot:hover .slot-icon { color:var(--gold); }
+.slot-label { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:rgba(245,240,232,.25); }
+.portfolio-slot:hover .slot-label { color:rgba(245,240,232,.7); }
+.slot-desc { font-size:0.82rem; color:rgba(245,240,232,.2); line-height:1.5; }
+.portfolio-slot:hover .slot-desc { color:rgba(245,240,232,.4); }
+.slot-tag { font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(200,169,110,.4); padding:5px 12px; border:1px solid rgba(200,169,110,.15); border-radius:2px; margin-top:4px; }
+.portfolio-slot:hover .slot-tag { color:var(--gold); border-color:rgba(200,169,110,.4); }
+
+/* EXTRA MOCKUP STYLES */
+/* Starter 3 — Plumber / Tradesman: stark white + cobalt blue, no-nonsense */
+.t3 { background:#f0f4ff; font-family:'IBM Plex Sans',sans-serif; }
+.t3-nav { background:#1a3acc; padding:11px 20px; display:flex; justify-content:space-between; align-items:center; }
+.t3-logo { font-size:0.9rem; font-weight:600; color:white; letter-spacing:0.04em; }
+.t3-logo span { background:white; color:#1a3acc; padding:1px 6px; margin-left:4px; font-size:0.7rem; font-weight:700; }
+.t3-nav-links { display:flex; gap:14px; }
+.t3-nav-links span { font-size:0.55rem; color:rgba(255,255,255,.6); text-transform:uppercase; letter-spacing:0.08em; }
+.t3-hero { background:white; display:grid; grid-template-columns:3px 1fr; }
+.t3-stripe { background:#1a3acc; }
+.t3-hero-c { padding:20px; }
+.t3-badge { background:#e8f0ff; color:#1a3acc; font-size:0.5rem; font-weight:700; padding:3px 8px; text-transform:uppercase; letter-spacing:0.1em; display:inline-block; margin-bottom:8px; }
+.t3-hero-c h3 { font-size:1.3rem; font-weight:600; color:#0a0a1a; line-height:1.2; margin-bottom:6px; }
+.t3-hero-c p { font-size:0.6rem; color:#6a6a7a; margin-bottom:12px; line-height:1.5; }
+.t3-btn { background:#1a3acc; color:white; display:inline-block; padding:8px 18px; font-size:0.58rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; }
+.t3-services { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#e8edf8; border-top:1px solid #e8edf8; }
+.t3-service { background:white; padding:12px 14px; }
+.t3-service-icon { font-size:1rem; margin-bottom:5px; }
+.t3-service-name { font-size:0.65rem; font-weight:600; color:#0a0a1a; margin-bottom:2px; }
+.t3-service-price { font-size:0.58rem; color:#1a3acc; font-weight:600; }
+.t3-trust { background:#1a3acc; padding:10px 20px; display:flex; justify-content:space-around; }
+.t3-trust-item { text-align:center; }
+.t3-trust-num { font-size:1rem; font-weight:700; color:white; }
+.t3-trust-lbl { font-size:0.48rem; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:0.08em; margin-top:2px; }
+
+/* Starter 4 — Florist: pastel sage + blush, editorial two-col */
+.t4 { background:#f8f5f0; font-family:'Cormorant Garamond',serif; }
+.t4-nav { background:#f8f5f0; padding:11px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e8e0d4; }
+.t4-logo { font-size:1.1rem; font-style:italic; font-weight:600; color:#2a2218; letter-spacing:0.04em; }
+.t4-nav-links { display:flex; gap:14px; }
+.t4-nav-links span { font-size:0.55rem; color:#9a8878; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; }
+.t4-hero { display:grid; grid-template-columns:1fr 1fr; height:200px; }
+.t4-hero-img { background:linear-gradient(160deg,#c8d8b8 0%,#a8c098 50%,#88a878 100%); display:flex; align-items:center; justify-content:center; font-size:3.5rem; }
+.t4-hero-text { background:#f0e8dc; padding:20px; display:flex; flex-direction:column; justify-content:center; }
+.t4-eyebrow { font-size:0.48rem; letter-spacing:0.18em; text-transform:uppercase; color:#8a6858; margin-bottom:6px; font-family:'DM Sans',sans-serif; }
+.t4-hero-text h3 { font-size:1.7rem; font-weight:600; color:#2a2218; line-height:1.05; margin-bottom:8px; font-style:italic; }
+.t4-hero-btn { display:inline-block; background:#2a2218; color:#f8f5f0; padding:7px 14px; font-size:0.52rem; text-transform:uppercase; letter-spacing:0.1em; font-family:'DM Sans',sans-serif; }
+.t4-products { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#e8e0d4; border-top:1px solid #e8e0d4; }
+.t4-product { background:#f8f5f0; padding:10px; }
+.t4-prod-img { height:50px; border-radius:4px; margin-bottom:6px; }
+.t4-prod-img-a { background:linear-gradient(135deg,#f8c8c0,#e8a098); }
+.t4-prod-img-b { background:linear-gradient(135deg,#c8d8b8,#a8c090); }
+.t4-prod-img-c { background:linear-gradient(135deg,#f0d8c0,#e0c0a0); }
+.t4-prod-name { font-size:0.65rem; font-weight:600; color:#2a2218; margin-bottom:2px; }
+.t4-prod-price { font-size:0.58rem; color:#8a6858; font-family:'DM Sans',sans-serif; }
+.t4-footer { background:#2a2218; padding:10px 20px; display:flex; justify-content:space-between; }
+.t4-footer span { font-size:0.52rem; color:rgba(248,245,240,.3); font-family:'DM Sans',sans-serif; }
+
+/* Professional 3 — Hotel / Accommodation: deep forest green + warm ivory */
+.t5 { background:#0e1a12; font-family:'DM Sans',sans-serif; }
+.t5-nav { background:rgba(255,255,255,.04); padding:12px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,.06); }
+.t5-logo { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:#d4c896; letter-spacing:0.06em; }
+.t5-nav-links { display:flex; gap:14px; }
+.t5-nav-links span { font-size:0.56rem; color:rgba(212,200,150,.4); letter-spacing:0.1em; text-transform:uppercase; }
+.t5-nav-cta { background:#d4c896; color:#0e1a12; padding:5px 12px; font-size:0.56rem; font-weight:700; }
+.t5-hero { background:linear-gradient(160deg,#0e1a12 0%,#1a3020 40%,#0e1a12 100%); padding:28px 20px; position:relative; overflow:hidden; }
+.t5-hero::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(212,200,150,.02) 28px,rgba(212,200,150,.02) 29px); }
+.t5-eyebrow { font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:#d4c896; margin-bottom:8px; position:relative; }
+.t5-hero h3 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:#f5f0e8; line-height:1.1; margin-bottom:6px; position:relative; }
+.t5-hero p { font-size:0.6rem; color:rgba(245,240,232,.4); margin-bottom:14px; position:relative; }
+.t5-hero-btn { display:inline-block; background:#d4c896; color:#0e1a12; padding:8px 18px; font-size:0.6rem; font-weight:700; }
+.t5-rooms { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; padding:14px 20px; }
+.t5-room { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); overflow:hidden; }
+.t5-room-img { height:50px; }
+.t5-room-img-a { background:linear-gradient(135deg,#1a3020,#2a5030); }
+.t5-room-img-b { background:linear-gradient(135deg,#1a2830,#2a4050); }
+.t5-room-img-c { background:linear-gradient(135deg,#2a1a10,#4a3020); }
+.t5-room-info { padding:8px; }
+.t5-room-name { font-size:0.6rem; font-weight:600; color:#f5f0e8; margin-bottom:2px; }
+.t5-room-price { font-size:0.56rem; color:#d4c896; }
+.t5-footer { background:rgba(0,0,0,.3); padding:10px 20px; display:flex; justify-content:space-between; border-top:1px solid rgba(212,200,150,.08); }
+.t5-footer span { font-size:0.52rem; color:rgba(212,200,150,.3); }
+
+/* Professional 4 — Real Estate agency: clean white + terracotta accent */
+.t6 { background:#ffffff; font-family:'DM Sans',sans-serif; }
+.t6-nav { background:#fff; padding:11px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #f0e8e0; }
+.t6-logo { font-size:0.9rem; font-weight:700; color:#1a0a00; letter-spacing:-0.01em; }
+.t6-logo span { color:#c04820; }
+.t6-nav-links { display:flex; gap:14px; align-items:center; }
+.t6-nav-links span { font-size:0.56rem; color:#8a7868; letter-spacing:0.06em; text-transform:uppercase; }
+.t6-nav-cta { background:#c04820; color:white; padding:6px 14px; font-size:0.56rem; font-weight:700; }
+.t6-hero { background:#faf6f2; padding:20px; display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:center; }
+.t6-hero-text h3 { font-size:1.3rem; font-weight:700; color:#1a0a00; line-height:1.2; margin-bottom:6px; }
+.t6-hero-text h3 em { font-style:normal; color:#c04820; }
+.t6-hero-text p { font-size:0.6rem; color:#7a6858; line-height:1.5; margin-bottom:12px; }
+.t6-search { background:white; border:1px solid #e8d8c8; padding:8px 12px; display:flex; gap:8px; align-items:center; }
+.t6-search-field { flex:1; height:22px; background:#f5f0ea; border:none; }
+.t6-search-btn { background:#c04820; color:white; padding:5px 10px; font-size:0.55rem; font-weight:700; white-space:nowrap; }
+.t6-hero-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.t6-stat-box { background:white; padding:12px; border:1px solid #f0e8e0; }
+.t6-stat-num { font-size:1.3rem; font-weight:700; color:#c04820; line-height:1; }
+.t6-stat-lbl { font-size:0.52rem; color:#8a7868; text-transform:uppercase; letter-spacing:0.08em; margin-top:3px; }
+.t6-listings { padding:14px 20px; }
+.t6-listings-title { font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:#8a7868; margin-bottom:10px; }
+.t6-listings-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.t6-listing { border:1px solid #f0e8e0; overflow:hidden; }
+.t6-listing-img { height:48px; }
+.t6-listing-img-a { background:linear-gradient(135deg,#f0e0d0,#d8c0a8); }
+.t6-listing-img-b { background:linear-gradient(135deg,#d8e8d0,#b8d0b0); }
+.t6-listing-img-c { background:linear-gradient(135deg,#d0d8e8,#b0b8d0); }
+.t6-listing-info { padding:7px 8px; }
+.t6-listing-price { font-size:0.72rem; font-weight:700; color:#1a0a00; margin-bottom:2px; }
+.t6-listing-addr { font-size:0.55rem; color:#8a7868; }
+.t6-footer { background:#1a0a00; padding:10px 20px; display:flex; justify-content:space-between; }
+.t6-footer span { font-size:0.52rem; color:rgba(255,255,255,.3); }
+
+@keyframes float1 { 0%,100%{transform:rotate(-2deg) translateY(0)} 50%{transform:rotate(-2deg) translateY(-12px)} }
+@keyframes float2 { 0%,100%{transform:rotate(1.5deg) translateY(0)} 50%{transform:rotate(1.5deg) translateY(-8px)} }
+@keyframes float3 { 0%,100%{transform:rotate(3deg) translateY(0)} 50%{transform:rotate(3deg) translateY(-16px)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.hero-content { animation:fadeUp .8s ease both; }
+.hero-visual { animation:fadeUp .8s ease .2s both; }
+
+@media(max-width:900px){
+  nav{padding:16px 24px} nav ul{display:none}
+  .hero{padding:100px 24px 60px} .hero-grid{grid-template-columns:1fr;gap:40px} .hero-visual{height:300px}
+  section{padding:70px 24px}
+  .packages-header,.process-header{flex-direction:column;gap:20px;align-items:flex-start}
+  .packages-grid,.testimonials-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:30px}
+  .stats-strip{gap:30px;flex-wrap:wrap;padding:24px}
+  .mockups-display{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Web<span>Studio</span></div>
+  <ul>
+    <li><a href="#packages">Paketai</a></li>
+    <li><a href="#mockup-viewer">Pavyzdžiai</a></li>
+    <li><a href="#process">Procesas</a></li>
+    <li><a href="#contact" class="nav-cta">Susisiekti</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-eyebrow"><div class="hero-line"></div><span>Svetainių kūrimas Lietuvoje</span></div>
+      <h1>Jūsų verslas<br>nusipelno<br><em>geriausios</em><br>svetainės</h1>
+      <p class="hero-sub">Profesionalios, modernios svetainės Lietuvos verslams. Trys paketai — nuo €150 iki €700. Pristatymas per ~7 dienas.</p>
+      <div class="hero-btns">
+        <a href="#packages" class="btn-primary">Peržiūrėti paketus</a>
+        <a href="#mockup-viewer" class="btn-ghost">Žiūrėti pavyzdžius →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-card card-main">
+        <div class="mock-browser-bar"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+        <div class="mock-content"><div class="mock-hero-block"></div><div class="mock-lines"><div class="mock-line"></div><div class="mock-line short"></div></div><div class="mock-grid"><div class="mock-card-sm"></div><div class="mock-card-sm"></div><div class="mock-card-sm"></div></div></div>
+      </div>
+      <div class="floating-card card-secondary">
+        <div class="mock-browser-bar"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+        <div class="mock-content"><div class="mock-hero-block" style="height:45px;background:linear-gradient(135deg,rgba(200,169,110,.2),rgba(200,169,110,.05))"></div><div class="mock-lines" style="margin-top:8px"><div class="mock-line"></div><div class="mock-line shorter"></div></div></div>
+      </div>
+      <div class="floating-card card-tertiary">
+        <div class="mock-browser-bar" style="height:18px"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+        <div class="mock-content" style="padding:8px"><div class="mock-hero-block" style="height:35px;background:linear-gradient(135deg,rgba(200,169,110,.25),rgba(200,169,110,.05))"></div><div class="mock-lines" style="margin-top:6px"><div class="mock-line shorter"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat"><div class="stat-num">120+</div><div class="stat-label">Sukurtų svetainių</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Patenkintų klientų</div></div>
+  <div class="stat"><div class="stat-num">7d.</div><div class="stat-label">Vidutinis pristatymas</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-label">Paketai</div></div>
+</div>
+
+<section class="packages" id="packages">
+  <div class="packages-header">
+    <div>
+      <div class="section-label">Kainodara</div>
+      <h2 style="color:var(--cream)">Pasirinkite tinkamą<br>paketą savo verslui</h2>
+    </div>
+    <p>Kiekvienas paketas apima du unikalius dizaino maketus. Hostingas (svetainės talpinimas) apmokamas atskirai — paprastai ~€3–6/mėn.</p>
+  </div>
+  <div class="packages-grid">
+
+    <div class="package-card" onclick="showTier('starter')">
+      <div class="package-tier">01 — Pradinis</div>
+      <div class="package-name">Starter</div>
+      <p class="package-desc">Vizitinė kortelė internete. Idealiai tinka smulkiajam verslui — kirpykloms, kavinėms, amatininkams.</p>
+      <div class="package-price"><sup>€</sup>150</div>
+      <div class="package-price-note">vienkartinis mokestis</div>
+      <div class="hosting-note">⚠ Hostingas (~€3–5/mėn.) apmokamas kliento atskirai</div>
+      <div class="package-divider"></div>
+      <ul class="package-features">
+        <li><span class="feat-icon">✦</span>Pagrindinis puslapis su jūsų informacija</li>
+        <li><span class="feat-icon">✦</span>Paslaugų / meniu sąrašas</li>
+        <li><span class="feat-icon">✦</span>Kontaktų skyrius su forma</li>
+        <li><span class="feat-icon">✦</span>Veikia telefone ir kompiuteryje</li>
+        <li><span class="feat-icon">✦</span>Pristatymas per ~5 dienas</li>
+      </ul>
+      <button class="package-btn" onclick="showTier('starter')">Žiūrėti maketus</button>
+      <a href="#contact" class="package-btn gold">Pradėti projektą</a>
+      <div class="mockup-count">2 maketai įtraukti</div>
+    </div>
+
+    <div class="package-card featured" onclick="showTier('medium')">
+      <div class="featured-badge">Populiariausias</div>
+      <div class="package-tier">02 — Vidutinis</div>
+      <div class="package-name">Professional</div>
+      <p class="package-desc">Pilna svetainė su keliais skyriais. Tinka salonams, viešbučiams, agentūroms ir paslaugų verslams.</p>
+      <div class="package-price"><sup>€</sup>350</div>
+      <div class="package-price-note">vienkartinis mokestis</div>
+      <div class="hosting-note">⚠ Hostingas (~€3–5/mėn.) apmokamas kliento atskirai</div>
+      <div class="package-divider"></div>
+      <ul class="package-features">
+        <li><span class="feat-icon">✦</span>Keli skyriai: apie mus, paslaugos, galerija, kontaktai</li>
+        <li><span class="feat-icon">✦</span>Animacijos ir modernūs efektai</li>
+        <li><span class="feat-icon">✦</span>Rezervacijos arba užklausos forma</li>
+        <li><span class="feat-icon">✦</span>Veikia telefone ir kompiuteryje</li>
+        <li><span class="feat-icon">✦</span>Pristatymas per ~7 dienas</li>
+      </ul>
+      <button class="package-btn" onclick="showTier('medium')">Žiūrėti maketus</button>
+      <a href="#contact" class="package-btn gold">Pradėti projektą</a>
+      <div class="mockup-count">2 maketai įtraukti</div>
+    </div>
+
+    <div class="package-card" onclick="showTier('premium')">
+      <div class="package-tier">03 — Aukščiausias</div>
+      <div class="package-name">Premium</div>
+      <p class="package-desc">Reprezentatyvi svetainė su išskirtinu dizainu. Advokatams, architektams, NT agentūroms ir kitiems rimtiems verslams.</p>
+      <div class="package-price"><sup>€</sup>700</div>
+      <div class="package-price-note">vienkartinis mokestis</div>
+      <div class="hosting-note">⚠ Hostingas (~€3–5/mėn.) apmokamas kliento atskirai</div>
+      <div class="package-divider"></div>
+      <ul class="package-features">
+        <li><span class="feat-icon">✦</span>Pilna daugiaskyrinė svetainė</li>
+        <li><span class="feat-icon">✦</span>Aukščiausio lygio dizainas ir animacijos</li>
+        <li><span class="feat-icon">✦</span>Komandos, atsiliekimų, proceso skyriai</li>
+        <li><span class="feat-icon">✦</span>Kontaktų forma su detaliais laukais</li>
+        <li><span class="feat-icon">✦</span>Pristatymas per ~10 dienų</li>
+      </ul>
+      <button class="package-btn" onclick="showTier('premium')">Žiūrėti maketus</button>
+      <a href="#contact" class="package-btn gold">Pradėti projektą</a>
+      <div class="mockup-count">2 maketai įtraukti</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="mockup-viewer">
+  <div class="viewer-header">
+    <div>
+      <div class="section-label" style="color:var(--gold)">Dizaino maketai</div>
+      <h2 style="color:var(--cream)">Peržiūrėkite svetainių<br>pavyzdžius</h2>
+    </div>
+    <div class="tier-tabs">
+      <button class="tier-tab active" onclick="showTier('starter')">Starter</button>
+      <button class="tier-tab" onclick="showTier('medium')">Professional</button>
+      <button class="tier-tab" onclick="showTier('premium')">Premium</button>
+    </div>
+  </div>
+
+  <!-- STARTER — 4 mockups -->
+  <div class="mockups-display mockup-tier active" id="tier-starter" style="grid-template-columns:1fr 1fr">
+    <div class="mockup-frame" onclick="window.open('demo-starter-restaurant.html','_blank')">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website r">
+        <div class="r-nav"><div class="r-logo">Skonis &amp; Tradicija</div><div class="r-nav-links"><span>Meniu</span><span>Apie mus</span><span>Rezervacija</span></div></div>
+        <!-- amber announcement bar -->
+        <div style="background:#e8c878;padding:5px 20px;text-align:center"><span style="font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;color:#1c0f00;font-family:'DM Sans',sans-serif;font-weight:600">✦ Šiandien: Šefų meniu už €29 · Rezervuokite iki 18:00</span></div>
+        <div class="r-hero">
+          <div class="r-hero-left">
+            <div style="font-size:0.48rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,200,120,.5);margin-bottom:8px;font-family:'DM Sans',sans-serif">Vilnius · Pilies g. · nuo 2018</div>
+            <h3>Tikras<br>lietuviškas<br>skonis</h3>
+            <p style="font-size:0.58rem;color:rgba(250,246,240,.4);margin-bottom:6px;font-family:'DM Sans',sans-serif;line-height:1.6">Tradiciniai receptai, šiuolaikiškas patiekimas. Rezervuokite stalą vakarienei ar šeimos šventei.</p>
+            <div class="r-hero-btn">Rezervuoti stalą</div>
+          </div>
+          <div class="r-hero-right" style="position:relative;overflow:hidden">
+            <div style="position:absolute;bottom:14px;right:14px;background:rgba(28,15,0,.8);padding:8px 12px;backdrop-filter:blur(4px)">
+              <div style="font-size:0.48rem;color:#e8c878;letter-spacing:0.12em;text-transform:uppercase;font-family:'DM Sans',sans-serif;margin-bottom:2px">Darbo laikas</div>
+              <div style="font-size:0.58rem;color:rgba(250,246,240,.7);font-family:'DM Sans',sans-serif">I–V 12:00–22:00</div>
+              <div style="font-size:0.58rem;color:rgba(250,246,240,.7);font-family:'DM Sans',sans-serif">Š–S 11:00–23:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="r-menu">
+          <div class="r-menu-title">Populiariausi patiekalai</div>
+          <div class="r-menu-grid">
+            <div class="r-item"><div class="r-item-top"><span class="r-item-name">Cepelinai</span><span class="r-item-price">€9.50</span></div><div class="r-item-desc">Su spirgučiais ir grietine</div></div>
+            <div class="r-item"><div class="r-item-top"><span class="r-item-name">Šaltibarščiai</span><span class="r-item-price">€6.00</span></div><div class="r-item-desc">Šaltas burokėlių sriuba</div></div>
+            <div class="r-item"><div class="r-item-top"><span class="r-item-name">Kugelis</span><span class="r-item-price">€8.00</span></div><div class="r-item-desc">Bulvių plokštainis</div></div>
+            <div class="r-item"><div class="r-item-top"><span class="r-item-name">Žemaičių blynai</span><span class="r-item-price">€7.50</span></div><div class="r-item-desc">Su varške ir grietine</div></div>
+          </div>
+        </div>
+        <div style="background:#faf6f0;padding:10px 20px;display:flex;gap:20px;border-top:1px solid #e8dcc8">
+          <div style="text-align:center"><div style="font-size:1rem;font-weight:600;color:#c07030;font-family:'Cormorant Garamond',serif">4.9★</div><div style="font-size:0.5rem;color:#a08060;font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:0.1em">Google</div></div>
+          <div style="text-align:center"><div style="font-size:1rem;font-weight:600;color:#c07030;font-family:'Cormorant Garamond',serif">340+</div><div style="font-size:0.5rem;color:#a08060;font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:0.1em">Atsiliepimų</div></div>
+          <div style="text-align:center"><div style="font-size:1rem;font-weight:600;color:#c07030;font-family:'Cormorant Garamond',serif">6m.</div><div style="font-size:0.5rem;color:#a08060;font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:0.1em">Patirtis</div></div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:flex-end"><div style="background:#1c0f00;color:#e8c878;padding:7px 14px;font-size:0.52rem;font-family:'DM Sans',sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Žiūrėti pilną meniu</div></div>
+        </div>
+        <div class="r-footer"><span>© 2024 Skonis &amp; Tradicija</span><span>Vilnius, Pilies g. 28</span></div>
+      </div>
+      <div class="click-hint"><span>Peržiūrėti demo →</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Starter — Maket #1</div><div class="mockup-label-desc">Restoranas / Kavinė — Šiltas, klasikinis dizainas</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website g">
+        <div class="g-nav"><div class="g-logo">TITAN GYM</div><div class="g-nav-links"><span>Treniruotės</span><span>Treneriai</span><span>Narystė</span></div></div>
+        <div class="g-hero">
+          <div class="g-hero-main">
+            <div class="g-tag">Vilnius · Atidarytas 24/7</div>
+            <h3 style="font-size:2.6rem">LAUŽYK<br><em>RIBAS.</em><br><em style="color:rgba(240,224,0,.4);font-size:1.8rem">DABAR.</em></h3>
+            <p class="g-sub">Profesionalus sporto klubas · nuo €29/mėn</p>
+            <div class="g-btns"><div class="g-btn-y">Gauti narystę</div><div class="g-btn-w">Tvarkaraštis</div></div>
+          </div>
+          <div class="g-side"><span>TITAN</span><span>2018</span><span>VLN</span></div>
+        </div>
+        <div class="g-stats">
+          <div class="g-stat"><div class="g-stat-num">340+</div><div class="g-stat-lbl">Aktyvių narių</div></div>
+          <div class="g-stat"><div class="g-stat-num">12</div><div class="g-stat-lbl">Sertifikuotų trenerių</div></div>
+          <div class="g-stat"><div class="g-stat-num">24/7</div><div class="g-stat-lbl">Atidarytas</div></div>
+        </div>
+        <!-- pricing strip -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:#111;border-top:1px solid #1a1a1a">
+          <div style="padding:12px 14px;border-right:1px solid #1a1a1a">
+            <div style="font-size:0.48rem;color:#555;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Standartinė</div>
+            <div style="font-size:1.1rem;font-weight:700;color:#f0e000;line-height:1">€29<span style="font-size:0.6rem;color:#555;font-weight:400">/mėn</span></div>
+          </div>
+          <div style="padding:12px 14px;border-right:1px solid #1a1a1a">
+            <div style="font-size:0.48rem;color:#555;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Premium</div>
+            <div style="font-size:1.1rem;font-weight:700;color:#f0e000;line-height:1">€49<span style="font-size:0.6rem;color:#555;font-weight:400">/mėn</span></div>
+          </div>
+          <div style="padding:12px 14px">
+            <div style="font-size:0.48rem;color:#555;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Dienos bilietas</div>
+            <div style="font-size:1.1rem;font-weight:700;color:#f0e000;line-height:1">€8<span style="font-size:0.6rem;color:#555;font-weight:400">/d.</span></div>
+          </div>
+        </div>
+        <div class="g-schedule">
+          <div class="g-sched-title">// Šiandienos grupinės treniruotės</div>
+          <div class="g-row"><span class="g-class">CrossFit</span><span class="g-time">07:00 – 08:00</span><span class="g-tag-sm">Laisva</span></div>
+          <div class="g-row"><span class="g-class">Bokso sąvados</span><span class="g-time">12:00 – 13:00</span><span class="g-tag-sm">2 vietos</span></div>
+          <div class="g-row"><span class="g-class">Pilates</span><span class="g-time">18:30 – 19:30</span><span class="g-tag-sm">Pilna</span></div>
+        </div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Starter — Maket #2</div><div class="mockup-label-desc">Sporto klubas — Brutalistinis, juoda / elektriškai geltona</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website t3">
+        <div style="background:#ffffff;font-family:'IBM Plex Sans',sans-serif;height:100%">
+  <!-- NAV -->
+  <div style="background:#1a3acc;padding:11px 18px;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:0.85rem;font-weight:600;color:white;letter-spacing:0.02em">SANTECHTURAS <span style="background:white;color:#1a3acc;padding:1px 6px;font-size:0.65rem;font-weight:700;margin-left:3px">PRO</span></div>
+    <div style="display:flex;gap:14px;align-items:center">
+      <span style="font-size:0.52rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:0.1em">Paslaugos</span>
+      <span style="font-size:0.52rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:0.1em">Kainos</span>
+      <span style="font-size:0.52rem;background:white;color:#1a3acc;padding:5px 10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em">Kviesti</span>
+    </div>
+  </div>
+  <!-- HERO: split, blue left / white right -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;height:200px">
+    <div style="background:#0f2090;padding:20px 18px;display:flex;flex-direction:column;justify-content:center">
+      <div style="font-size:0.46rem;background:rgba(255,255,255,.15);color:white;padding:3px 8px;display:inline-block;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;font-family:'IBM Plex Sans',sans-serif">✓ Vilnius · nuo 2012</div>
+      <div style="font-family:'IBM Plex Sans',sans-serif;font-size:1.5rem;font-weight:600;color:white;line-height:1.1;margin-bottom:10px">Greitai.<br>Patikimai.<br>Garantija.</div>
+      <div style="font-size:0.56rem;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:12px">Santechnikos darbai ir avarinis iškvietimas Vilniuje.</div>
+      <div style="background:white;color:#1a3acc;display:inline-block;padding:8px 16px;font-size:0.56rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em">Kviesti dabar</div>
+    </div>
+    <div style="background:#f4f6fb;padding:20px 16px;display:flex;flex-direction:column;justify-content:center;gap:10px">
+      <div style="font-size:0.48rem;color:#00205c;text-transform:uppercase;letter-spacing:0.14em;font-weight:600;margin-bottom:2px">Paslaugos</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid #e0e4f0">
+          <span style="font-size:0.65rem;font-weight:500;color:#0a0a1a">Vamzdynų remontas</span>
+          <span style="font-size:0.62rem;font-weight:700;color:#1a3acc">nuo €45</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid #e0e4f0">
+          <span style="font-size:0.65rem;font-weight:500;color:#0a0a1a">Vonios įrengimas</span>
+          <span style="font-size:0.62rem;font-weight:700;color:#1a3acc">nuo €120</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid #e0e4f0">
+          <span style="font-size:0.65rem;font-weight:500;color:#0a0a1a">Santechnikos įranga</span>
+          <span style="font-size:0.62rem;font-weight:700;color:#1a3acc">nuo €35</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:0.65rem;font-weight:500;color:#0a0a1a">Avarinis iškvietimas</span>
+          <span style="font-size:0.62rem;font-weight:700;color:#1a3acc">nuo €65</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- STATS -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:white;border-top:2px solid #1a3acc">
+    <div style="padding:12px 16px;border-right:1px solid #e8edf8;text-align:center">
+      <div style="font-size:1.3rem;font-weight:300;color:#1a3acc;line-height:1">800+</div>
+      <div style="font-size:0.48rem;color:#8888a0;text-transform:uppercase;letter-spacing:0.1em;margin-top:3px">Darbų atlikta</div>
+    </div>
+    <div style="padding:12px 16px;border-right:1px solid #e8edf8;text-align:center">
+      <div style="font-size:1.3rem;font-weight:300;color:#1a3acc;line-height:1">12m.</div>
+      <div style="font-size:0.48rem;color:#8888a0;text-transform:uppercase;letter-spacing:0.1em;margin-top:3px">Patirtis</div>
+    </div>
+    <div style="padding:12px 16px;text-align:center">
+      <div style="font-size:1.3rem;font-weight:300;color:#1a3acc;line-height:1">4.9★</div>
+      <div style="font-size:0.48rem;color:#8888a0;text-transform:uppercase;letter-spacing:0.1em;margin-top:3px">Google</div>
+    </div>
+  </div>
+  <!-- REVIEW -->
+  <div style="background:#f4f6fb;padding:12px 16px;border-top:1px solid #e0e4f0">
+    <div style="font-size:0.58rem;color:#3a3a5a;font-style:italic;margin-bottom:4px">"Atvyko per 40 min. Puikus, greitas darbas — rekomenduoju!"</div>
+    <div style="font-size:0.5rem;color:#1a3acc;font-weight:600">★★★★★ Tomas K., Vilnius</div>
+  </div>
+  <!-- FOOTER -->
+  <div style="background:#1a3acc;padding:9px 16px;display:flex;justify-content:space-between">
+    <span style="font-size:0.5rem;color:rgba(255,255,255,.5)">© 2024 Santechturas Pro</span>
+    <span style="font-size:0.5rem;color:rgba(255,255,255,.5)">Vilnius · 24/7</span>
+  </div>
+</div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Starter — Maket #3</div><div class="mockup-label-desc">Santechnikas / Amatai — Švari mėlyna, autoritetingas stilius</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website t4">
+        <div style="background:#f8f5f0;font-family:'Cormorant Garamond',serif;height:100%">
+  <!-- NAV -->
+  <div style="background:#f8f5f0;padding:11px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e8e0d4">
+    <div style="font-size:1.05rem;font-weight:600;font-style:italic;color:#2a2218;letter-spacing:0.04em">Rūtos Gėlės</div>
+    <div style="display:flex;gap:14px;align-items:center">
+      <span style="font-size:0.52rem;color:#9a8878;letter-spacing:0.12em;text-transform:uppercase;font-family:'DM Sans',sans-serif">Kolekcija</span>
+      <span style="font-size:0.52rem;color:#9a8878;letter-spacing:0.12em;text-transform:uppercase;font-family:'DM Sans',sans-serif">Užsakymai</span>
+      <span style="font-size:0.52rem;background:#2a2218;color:#f8f5f0;padding:5px 10px;font-family:'DM Sans',sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:0.08em">Užsakyti</span>
+    </div>
+  </div>
+  <!-- HERO: full-width image left, editorial text right -->
+  <div style="display:grid;grid-template-columns:1.1fr 1fr;height:200px">
+    <div style="background:linear-gradient(160deg,#c8d8b8 0%,#a8c090 50%,#7a9870 100%);position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(248,245,240,.3))"></div>
+      <div style="position:absolute;bottom:16px;left:16px">
+        <div style="background:rgba(248,245,240,.92);padding:8px 12px">
+          <div style="font-size:0.46rem;color:#6a5840;font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:2px">Šios savaitės</div>
+          <div style="font-size:0.78rem;font-weight:600;color:#2a2218">Tulpių kolekcija</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#f0e8dc;padding:20px 16px;display:flex;flex-direction:column;justify-content:center">
+      <div style="font-size:0.46rem;letter-spacing:0.18em;text-transform:uppercase;color:#8a6858;margin-bottom:8px;font-family:'DM Sans',sans-serif">Gėlių studija · Kaunas</div>
+      <div style="font-size:1.8rem;font-weight:400;color:#2a2218;line-height:1;margin-bottom:10px">Gėlės,<br>kurios<br><em>kalba</em></div>
+      <div style="background:#2a2218;color:#f8f5f0;display:inline-block;padding:7px 14px;font-size:0.5rem;font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:0.1em">Užsakyti puokštę</div>
+    </div>
+  </div>
+  <!-- PRODUCTS -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:#e8e0d4;border-top:1px solid #e8e0d4">
+    <div style="background:#f8f5f0;padding:10px">
+      <div style="height:52px;background:linear-gradient(135deg,#f8c8c0,#e8a098);margin-bottom:7px"></div>
+      <div style="font-size:0.68rem;font-weight:600;color:#2a2218;margin-bottom:2px">Vestuvių puokštė</div>
+      <div style="font-size:0.58rem;color:#8a6858;font-family:'DM Sans',sans-serif">nuo €80</div>
+    </div>
+    <div style="background:#f8f5f0;padding:10px">
+      <div style="height:52px;background:linear-gradient(135deg,#c8d8b8,#a8c090);margin-bottom:7px"></div>
+      <div style="font-size:0.68rem;font-weight:600;color:#2a2218;margin-bottom:2px">Sezoninė puokštė</div>
+      <div style="font-size:0.58rem;color:#8a6858;font-family:'DM Sans',sans-serif">nuo €25</div>
+    </div>
+    <div style="background:#f8f5f0;padding:10px">
+      <div style="height:52px;background:linear-gradient(135deg,#f0d8c0,#e0c0a0);margin-bottom:7px"></div>
+      <div style="font-size:0.68rem;font-weight:600;color:#2a2218;margin-bottom:2px">Verslo floristika</div>
+      <div style="font-size:0.58rem;color:#8a6858;font-family:'DM Sans',sans-serif">nuo €60</div>
+    </div>
+  </div>
+  <!-- REVIEW STRIP -->
+  <div style="background:#f0e8dc;padding:10px 16px;border-top:1px solid #e8e0d4;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:0.56rem;color:#6a5840;font-style:italic">"Tobulos gėlės vestuvėms — ačiū Rūta!" ★★★★★</div>
+  </div>
+  <!-- FOOTER -->
+  <div style="background:#2a2218;padding:9px 16px;display:flex;justify-content:space-between">
+    <span style="font-size:0.5rem;color:rgba(248,245,240,.35);font-family:'DM Sans',sans-serif">© 2024 Rūtos Gėlės</span>
+    <span style="font-size:0.5rem;color:rgba(248,245,240,.35);font-family:'DM Sans',sans-serif">Kaunas, Laisvės al.</span>
+  </div>
+</div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Starter — Maket #4</div><div class="mockup-label-desc">Gėlių studija — Švelnus pastelinis, redakcinis stilius</div></div>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL — 4 mockups -->
+  <div class="mockups-display mockup-tier" id="tier-medium" style="grid-template-columns:1fr 1fr">
+    <div class="mockup-frame" onclick="window.open('demo-professional-beauty.html','_blank')">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website" style="background:#fdf8f5;font-family:'Cormorant Garamond',serif;overflow:hidden">
+        <!-- NAV: transparent, italic logo, rose links -->
+        <div style="background:#fdf8f5;padding:11px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(212,144,122,.15)">
+          <div style="font-size:1rem;font-weight:600;font-style:italic;color:#2a1a14;letter-spacing:0.04em">Žiedas &amp; Ko.</div>
+          <div style="display:flex;gap:14px;align-items:center">
+            <span style="font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;color:#a08878;font-family:'Jost',sans-serif">Paslaugos</span>
+            <span style="font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;color:#a08878;font-family:'Jost',sans-serif">Galerija</span>
+            <span style="font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;background:#2a1a14;color:#fdf8f5;padding:5px 12px;font-family:'Jost',sans-serif;font-weight:500">Rezervuoti</span>
+          </div>
+        </div>
+        <!-- HERO: split grid — blush left, rose-gradient right -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;height:218px">
+          <div style="background:#f5e8dc;padding:18px 16px;display:flex;flex-direction:column;justify-content:flex-end;position:relative">
+            <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(212,144,122,.12) 1px,transparent 1px);background-size:14px 14px"></div>
+            <div style="font-size:0.48rem;letter-spacing:0.22em;text-transform:uppercase;color:#d4907a;margin-bottom:7px;display:flex;align-items:center;gap:7px;position:relative"><span style="display:inline-block;width:20px;height:1px;background:#d4907a"></span>Grožio studija · Vilnius</div>
+            <div style="font-size:1.7rem;font-weight:300;line-height:1;color:#2a1a14;margin-bottom:10px;position:relative">Grožis,<br>kuris<br><em style="color:#d4907a">kalba</em><br>pats</div>
+            <div style="display:inline-block;background:#2a1a14;color:#fdf8f5;padding:7px 14px;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'Jost',sans-serif;position:relative">Rezervuoti vizitą</div>
+          </div>
+          <div style="background:linear-gradient(160deg,#e8c8b8 0%,#d4a898 40%,#c09080 100%);position:relative;overflow:hidden">
+            <div style="position:absolute;bottom:10px;left:-14px;background:#fdf8f5;padding:10px 16px;box-shadow:0 8px 24px rgba(42,26,20,.15)">
+              <div style="font-size:0.46rem;letter-spacing:0.14em;text-transform:uppercase;color:#d4907a;font-family:'Jost',sans-serif;margin-bottom:3px">Mūsų žadas</div>
+              <div style="font-size:0.72rem;font-weight:600;color:#2a1a14">Kiekvienas vizitas — išskirtinis</div>
+            </div>
+            <div style="position:absolute;top:10px;right:10px;font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:rgba(255,255,255,.12);line-height:1">BEAUTY</div>
+          </div>
+        </div>
+        <!-- STRIP: dark bar with rose dot tags -->
+        <div style="background:#2a1a14;padding:9px 16px;display:flex;gap:16px;align-items:center">
+          <span style="font-size:0.46rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(253,248,245,.4);font-family:'Jost',sans-serif;display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;border-radius:50%;background:#d4907a;display:inline-block"></span>Plaukų stilistika</span>
+          <span style="font-size:0.46rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(253,248,245,.4);font-family:'Jost',sans-serif;display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;border-radius:50%;background:#d4907a;display:inline-block"></span>Nagų dizainas</span>
+          <span style="font-size:0.46rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(253,248,245,.4);font-family:'Jost',sans-serif;display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;border-radius:50%;background:#d4907a;display:inline-block"></span>Veido priežiūra</span>
+          <span style="font-size:0.46rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(253,248,245,.4);font-family:'Jost',sans-serif;display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;border-radius:50%;background:#d4907a;display:inline-block"></span>Makiažas</span>
+        </div>
+        <!-- SERVICES: blush bg, 3 columns with rose underline accent -->
+        <div style="background:#f5e8dc;padding:14px 16px">
+          <div style="font-size:0.46rem;letter-spacing:0.22em;text-transform:uppercase;color:#d4907a;margin-bottom:10px;display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif"><span style="display:inline-block;width:18px;height:1px;background:#d4907a"></span>Mūsų paslaugos</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px">
+            <div style="background:#fdf8f5;padding:12px 10px;position:relative;border-bottom:2px solid #d4907a">
+              <div style="font-size:1.4rem;font-weight:300;color:rgba(212,144,122,.2);line-height:1;margin-bottom:6px">01</div>
+              <div style="font-size:0.78rem;font-weight:400;color:#2a1a14;margin-bottom:4px">Plaukų stilistika</div>
+              <div style="font-size:0.55rem;color:#a08878;font-family:'Jost',sans-serif;line-height:1.4;margin-bottom:6px">Kirpimas, dažymas, balayage ir priežiūra</div>
+              <div style="font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;color:#d4907a;font-family:'Jost',sans-serif;font-weight:500">nuo €25</div>
+            </div>
+            <div style="background:#fdf8f5;padding:12px 10px;border-bottom:2px solid transparent">
+              <div style="font-size:1.4rem;font-weight:300;color:rgba(212,144,122,.2);line-height:1;margin-bottom:6px">02</div>
+              <div style="font-size:0.78rem;font-weight:400;color:#2a1a14;margin-bottom:4px">Nagų dizainas</div>
+              <div style="font-size:0.55rem;color:#a08878;font-family:'Jost',sans-serif;line-height:1.4;margin-bottom:6px">Gelinis lakas, nagų dizainas, pedikiūras</div>
+              <div style="font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;color:#d4907a;font-family:'Jost',sans-serif;font-weight:500">nuo €18</div>
+            </div>
+            <div style="background:#fdf8f5;padding:12px 10px;border-bottom:2px solid transparent">
+              <div style="font-size:1.4rem;font-weight:300;color:rgba(212,144,122,.2);line-height:1;margin-bottom:6px">03</div>
+              <div style="font-size:0.78rem;font-weight:400;color:#2a1a14;margin-bottom:4px">Veido priežiūra</div>
+              <div style="font-size:0.55rem;color:#a08878;font-family:'Jost',sans-serif;line-height:1.4;margin-bottom:6px">Valymas, drėkinimas, hialurono procedūra</div>
+              <div style="font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;color:#d4907a;font-family:'Jost',sans-serif;font-weight:500">nuo €45</div>
+            </div>
+          </div>
+        </div>
+        <!-- FOOTER -->
+        <div style="background:#2a1a14;padding:9px 16px;display:flex;justify-content:space-between">
+          <span style="font-size:0.48rem;color:rgba(253,248,245,.3);font-family:'Jost',sans-serif">© 2024 Žiedas &amp; Ko.</span>
+          <span style="font-size:0.48rem;color:rgba(253,248,245,.3);font-family:'Jost',sans-serif">Gedimino pr. 15, Vilnius</span>
+        </div>
+      </div>
+      <div class="click-hint"><span>Peržiūrėti demo →</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Professional — Maket #1</div><div class="mockup-label-desc">Grožio studija — Žiedas &amp; Ko. · pilna demonstracija</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website a">
+        <div style="background:#ffffff;font-family:'IBM Plex Sans',sans-serif;height:100%">
+  <!-- NAV -->
+  <div style="background:#00205c;padding:11px 18px;display:flex;justify-content:space-between;align-items:center">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:20px;height:20px;background:white;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:0.52rem;font-weight:700;color:#00205c">BV</span></div>
+      <span style="font-size:0.72rem;font-weight:500;color:white;letter-spacing:0.08em;text-transform:uppercase">Baltic Ventures</span>
+    </div>
+    <div style="display:flex;gap:16px;align-items:center">
+      <span style="font-size:0.5rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:0.08em">Paslaugos</span>
+      <span style="font-size:0.5rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:0.08em">Komanda</span>
+      <span style="font-size:0.5rem;background:white;color:#00205c;padding:5px 10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em">Susisiekti</span>
+    </div>
+  </div>
+  <!-- HERO: left accent + content -->
+  <div style="display:grid;grid-template-columns:4px 1fr;background:white">
+    <div style="background:#00205c"></div>
+    <div style="padding:20px 18px">
+      <div style="font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:#00205c;font-weight:600;margin-bottom:8px">Buhalterinė apskaita · Mokesčiai</div>
+      <div style="font-size:1.2rem;font-weight:300;color:#0a0a1a;line-height:1.25;margin-bottom:8px">Jūsų finansai —<br><strong style="font-weight:600">mūsų atsakomybė.</strong></div>
+      <div style="font-size:0.6rem;color:#6a6a7a;line-height:1.6;margin-bottom:14px">Profesionalios buhalterinės ir mokesčių paslaugos Lietuvos įmonėms nuo 2009 metų.</div>
+      <div style="display:flex;gap:8px">
+        <div style="background:#00205c;color:white;padding:8px 16px;font-size:0.55rem;font-weight:500;text-transform:uppercase;letter-spacing:0.1em">Gauti pasiūlymą</div>
+        <div style="border:1px solid #e0e4f0;color:#00205c;padding:7px 12px;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.08em">Paslaugos →</div>
+      </div>
+    </div>
+  </div>
+  <!-- SERVICES GRID -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #e8e8f0">
+    <div style="padding:12px 14px;border-right:1px solid #e8e8f0;border-bottom:1px solid #e8e8f0">
+      <div style="font-size:0.5rem;color:#00205c;font-weight:600;letter-spacing:0.14em;margin-bottom:5px">01</div>
+      <div style="font-size:0.7rem;font-weight:500;color:#0a0a1a;margin-bottom:3px">Buhalterija</div>
+      <div style="font-size:0.55rem;color:#9090a0;line-height:1.4">Mėnesinė apskaita, atskaitomybė</div>
+    </div>
+    <div style="padding:12px 14px;border-bottom:1px solid #e8e8f0">
+      <div style="font-size:0.5rem;color:#00205c;font-weight:600;letter-spacing:0.14em;margin-bottom:5px">02</div>
+      <div style="font-size:0.7rem;font-weight:500;color:#0a0a1a;margin-bottom:3px">Mokesčiai</div>
+      <div style="font-size:0.55rem;color:#9090a0;line-height:1.4">VMI deklaracijos, optimizavimas</div>
+    </div>
+    <div style="padding:12px 14px;border-right:1px solid #e8e8f0">
+      <div style="font-size:0.5rem;color:#00205c;font-weight:600;letter-spacing:0.14em;margin-bottom:5px">03</div>
+      <div style="font-size:0.7rem;font-weight:500;color:#0a0a1a;margin-bottom:3px">Darbo teisė</div>
+      <div style="font-size:0.55rem;color:#9090a0;line-height:1.4">Sutartys, DU skaičiavimas</div>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="font-size:0.5rem;color:#00205c;font-weight:600;letter-spacing:0.14em;margin-bottom:5px">04</div>
+      <div style="font-size:0.7rem;font-weight:500;color:#0a0a1a;margin-bottom:3px">Auditas</div>
+      <div style="font-size:0.55rem;color:#9090a0;line-height:1.4">Vidinis ir išorinis auditas</div>
+    </div>
+  </div>
+  <!-- DATA ROW -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;background:#f4f6fb;border-top:1px solid #e0e4f0">
+    <div style="padding:11px 14px;border-right:1px solid #e0e4f0">
+      <div style="font-size:1.15rem;font-weight:300;color:#00205c;line-height:1">580+</div>
+      <div style="font-size:0.48rem;color:#8888a0;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px">Klientų</div>
+    </div>
+    <div style="padding:11px 14px;border-right:1px solid #e0e4f0">
+      <div style="font-size:1.15rem;font-weight:300;color:#00205c;line-height:1">15m.</div>
+      <div style="font-size:0.48rem;color:#8888a0;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px">Rinkoje</div>
+    </div>
+    <div style="padding:11px 14px">
+      <div style="font-size:1.15rem;font-weight:300;color:#00205c;line-height:1">100%</div>
+      <div style="font-size:0.48rem;color:#8888a0;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px">Laiku</div>
+    </div>
+  </div>
+  <!-- FOOTER -->
+  <div style="background:#00205c;padding:9px 16px;display:flex;justify-content:space-between">
+    <span style="font-size:0.5rem;color:rgba(255,255,255,.4)">© 2024 Baltic Ventures UAB</span>
+    <span style="font-size:0.5rem;color:rgba(255,255,255,.4)">Vilnius · Kaunas</span>
+  </div>
+</div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Professional — Maket #2</div><div class="mockup-label-desc">Apskaita / Finansai — Šveicariškas tinklelis, tamsiai mėlyna</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website t5">
+        <div class="t5-nav"><div class="t5-logo">VILLA DAINAVA</div><div class="t5-nav-links"><span>Kambariai</span><span>Spa &amp; Wellness</span><span>Renginiai</span><span class="t5-nav-cta">Rezervuoti</span></div></div>
+        <!-- full bleed hero with text overlay -->
+        <div style="position:relative;height:220px;overflow:hidden;background:linear-gradient(160deg,#0e1a12 0%,#1a3020 40%,#0a1a0a 100%)">
+          <!-- subtle line texture -->
+          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(212,200,150,.025) 28px,rgba(212,200,150,.025) 29px)"></div>
+          <!-- glow -->
+          <div style="position:absolute;top:-30%;right:-10%;width:60%;height:160%;background:radial-gradient(ellipse,rgba(212,200,150,.08) 0%,transparent 70%)"></div>
+          <div style="position:absolute;inset:0;padding:22px 20px;display:flex;flex-direction:column;justify-content:flex-end;z-index:1">
+            <div style="font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:#d4c896;margin-bottom:8px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:18px;height:1px;background:#d4c896"></span>Boutique viešbutis · Druskininkai</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:#f5f0e8;line-height:1;margin-bottom:8px">Poilsis, kurį<br>prisiminsite<br><em style="color:#d4c896">visą gyvenimą</em></div>
+            <div style="font-size:0.58rem;color:rgba(245,240,232,.4);margin-bottom:14px">Prabangus atsipalaidavimas miško apsuptyje · 2 val. nuo Vilniaus</div>
+            <div style="display:flex;gap:8px">
+              <div class="t5-hero-btn">Tikrinti laisvumą</div>
+              <div style="border:1px solid rgba(212,200,150,.25);color:#d4c896;padding:8px 14px;font-size:0.58rem;font-weight:500">Sužinoti daugiau</div>
+            </div>
+          </div>
+          <!-- rating badge top-right -->
+          <div style="position:absolute;top:16px;right:16px;background:rgba(212,200,150,.15);border:1px solid rgba(212,200,150,.3);padding:6px 10px;z-index:2">
+            <div style="font-size:0.68rem;font-weight:700;color:#d4c896;text-align:center">4.9★</div>
+            <div style="font-size:0.46rem;color:rgba(245,240,232,.4);text-align:center;letter-spacing:0.08em;text-transform:uppercase">Booking.com</div>
+          </div>
+        </div>
+        <!-- amenities strip -->
+        <div style="background:rgba(255,255,255,.03);padding:8px 16px;display:flex;gap:16px;border-bottom:1px solid rgba(212,200,150,.08)">
+          <span style="font-size:0.48rem;color:rgba(212,200,150,.5);letter-spacing:0.1em;text-transform:uppercase">🌿 SPA</span>
+          <span style="font-size:0.48rem;color:rgba(212,200,150,.5);letter-spacing:0.1em;text-transform:uppercase">🍽 Restoranas</span>
+          <span style="font-size:0.48rem;color:rgba(212,200,150,.5);letter-spacing:0.1em;text-transform:uppercase">🏊 Baseinas</span>
+          <span style="font-size:0.48rem;color:rgba(212,200,150,.5);letter-spacing:0.1em;text-transform:uppercase">🔥 Sauna</span>
+        </div>
+        <div class="t5-rooms">
+          <div class="t5-room"><div class="t5-room-img t5-room-img-a"></div><div class="t5-room-info"><div class="t5-room-name">Standartinis</div><div class="t5-room-price">nuo €89/naktis</div></div></div>
+          <div class="t5-room"><div class="t5-room-img t5-room-img-b"></div><div class="t5-room-info"><div class="t5-room-name">Deluxe</div><div class="t5-room-price">nuo €149/naktis</div></div></div>
+          <div class="t5-room"><div class="t5-room-img t5-room-img-c"></div><div class="t5-room-info"><div class="t5-room-name">Liuksas</div><div class="t5-room-price">nuo €249/naktis</div></div></div>
+        </div>
+        <div class="t5-footer"><span>© 2024 Villa Dainava · Druskininkai</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="432a2d252c03352a2f2f2227222a2d2235226d2f37">[email&#160;protected]</a></span></div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Professional — Maket #3</div><div class="mockup-label-desc">Viešbutis / Poilsis — Miško žaluma, prabangus tamsusis</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website t6">
+        <div style="background:#ffffff;font-family:'DM Sans',sans-serif;height:100%">
+  <!-- NAV -->
+  <div style="background:white;padding:11px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #f0e8e0">
+    <div style="font-size:0.9rem;font-weight:700;color:#1a0a00;letter-spacing:-0.01em">AURI<span style="color:#c04820">NT</span></div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <span style="font-size:0.52rem;color:#8a7868;text-transform:uppercase;letter-spacing:0.06em">Objektai</span>
+      <span style="font-size:0.52rem;color:#8a7868;text-transform:uppercase;letter-spacing:0.06em">Investicijos</span>
+      <span style="font-size:0.52rem;background:#c04820;color:white;padding:5px 10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em">Susisiekti</span>
+    </div>
+  </div>
+  <!-- HERO -->
+  <div style="background:#faf6f2;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center">
+    <div>
+      <div style="font-size:0.46rem;color:#c04820;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:6px">Premium NT agentūra · nuo 2006</div>
+      <div style="font-size:1.25rem;font-weight:700;color:#1a0a00;line-height:1.15;margin-bottom:8px">Jūsų svajonių<br>namai <span style="color:#c04820">čia</span></div>
+      <div style="font-size:0.58rem;color:#7a6858;line-height:1.5;margin-bottom:10px">Vilnius · Kaunas · Palanga. Perkame, parduodame, konsultuojame.</div>
+      <!-- search -->
+      <div style="background:white;border:1px solid #e8d8c8;padding:7px 10px;display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <div style="flex:1;font-size:0.55rem;color:#c0b0a0">Ieškoti objekto...</div>
+        <div style="background:#c04820;color:white;padding:5px 10px;font-size:0.52rem;font-weight:700;flex-shrink:0">Ieškoti</div>
+      </div>
+      <!-- pills -->
+      <div style="display:flex;gap:5px">
+        <div style="background:#c04820;color:white;padding:3px 9px;font-size:0.46rem;font-weight:700;text-transform:uppercase">Pirkimas</div>
+        <div style="border:1px solid #e8d8c8;color:#8a7868;padding:3px 9px;font-size:0.46rem;text-transform:uppercase">Nuoma</div>
+        <div style="border:1px solid #e8d8c8;color:#8a7868;padding:3px 9px;font-size:0.46rem;text-transform:uppercase">Investicijos</div>
+      </div>
+    </div>
+    <!-- stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div style="background:white;padding:11px;border:1px solid #f0e8e0">
+        <div style="font-size:1.15rem;font-weight:700;color:#c04820;line-height:1">1,200+</div>
+        <div style="font-size:0.48rem;color:#8a7868;text-transform:uppercase;letter-spacing:0.08em;margin-top:3px">Parduota</div>
+      </div>
+      <div style="background:white;padding:11px;border:1px solid #f0e8e0">
+        <div style="font-size:1.15rem;font-weight:700;color:#c04820;line-height:1">18m.</div>
+        <div style="font-size:0.48rem;color:#8a7868;text-transform:uppercase;letter-spacing:0.08em;margin-top:3px">Rinkoje</div>
+      </div>
+      <div style="background:white;padding:11px;border:1px solid #f0e8e0">
+        <div style="font-size:1.15rem;font-weight:700;color:#c04820;line-height:1">3</div>
+        <div style="font-size:0.48rem;color:#8a7868;text-transform:uppercase;letter-spacing:0.08em;margin-top:3px">Miestai</div>
+      </div>
+      <div style="background:white;padding:11px;border:1px solid #f0e8e0">
+        <div style="font-size:1.15rem;font-weight:700;color:#c04820;line-height:1">98%</div>
+        <div style="font-size:0.48rem;color:#8a7868;text-transform:uppercase;letter-spacing:0.08em;margin-top:3px">Patenkintų</div>
+      </div>
+    </div>
+  </div>
+  <!-- LISTINGS -->
+  <div style="padding:12px 16px;background:white;border-top:1px solid #f0e8e0">
+    <div style="font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;color:#8a7868;margin-bottom:10px">Naujausi objektai</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <div style="border:1px solid #f0e8e0;overflow:hidden">
+        <div style="height:46px;background:linear-gradient(135deg,#f0e0d0,#d8c0a8);position:relative">
+          <div style="position:absolute;top:4px;left:4px;background:#c04820;color:white;font-size:0.42rem;font-weight:700;padding:2px 5px;text-transform:uppercase">Naujas</div>
+        </div>
+        <div style="padding:7px 8px">
+          <div style="font-size:0.68rem;font-weight:700;color:#1a0a00">€485,000</div>
+          <div style="font-size:0.52rem;color:#8a7868;margin-top:1px">Antakalnis, Vilnius</div>
+          <div style="font-size:0.48rem;color:#c04820;margin-top:3px">4 kamb. · 148m²</div>
+        </div>
+      </div>
+      <div style="border:1px solid #f0e8e0;overflow:hidden">
+        <div style="height:46px;background:linear-gradient(135deg,#d8e8d0,#b8d0b0);position:relative">
+          <div style="position:absolute;top:4px;left:4px;background:#2a6030;color:white;font-size:0.42rem;font-weight:700;padding:2px 5px;text-transform:uppercase">Premium</div>
+        </div>
+        <div style="padding:7px 8px">
+          <div style="font-size:0.68rem;font-weight:700;color:#1a0a00">€1,200,000</div>
+          <div style="font-size:0.52rem;color:#8a7868;margin-top:1px">Nida, Neringa</div>
+          <div style="font-size:0.48rem;color:#c04820;margin-top:3px">Vila · 320m²</div>
+        </div>
+      </div>
+      <div style="border:1px solid #f0e8e0;overflow:hidden">
+        <div style="height:46px;background:linear-gradient(135deg,#d0d8e8,#b0b8d0)"></div>
+        <div style="padding:7px 8px">
+          <div style="font-size:0.68rem;font-weight:700;color:#1a0a00">€340,000</div>
+          <div style="font-size:0.52rem;color:#8a7868;margin-top:1px">Palanga</div>
+          <div style="font-size:0.48rem;color:#c04820;margin-top:3px">Penthouse · 95m²</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FOOTER -->
+  <div style="background:#1a0a00;padding:9px 16px;display:flex;justify-content:space-between">
+    <span style="font-size:0.5rem;color:rgba(255,255,255,.35)">© 2024 AURI NT</span>
+    <span style="font-size:0.5rem;color:rgba(255,255,255,.35)">Vilnius · Kaunas · Palanga</span>
+  </div>
+</div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Professional — Maket #4</div><div class="mockup-label-desc">NT agentūra — Švari balta + terrakota, modernus</div></div>
+    </div>
+  </div>
+
+  <!-- PREMIUM — 4 mockups -->
+  <div class="mockups-display mockup-tier" id="tier-premium" style="grid-template-columns:1fr 1fr">
+    <div class="mockup-frame" onclick="window.open('demo-premium-lawfirm.html','_blank')">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website" style="background:#0f1329;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;position:relative">
+        <!-- NAV: dark navy, gold mark, white links -->
+        <div style="background:rgba(255,255,255,.03);padding:11px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(200,169,110,.12)">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:22px;height:22px;border:1px solid #c8a96e;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-family:'Playfair Display',serif;font-size:0.48rem;font-weight:700;color:#c8a96e">L&amp;P</span></div>
+            <div style="font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:700;color:white">Lex <em style="font-style:normal;color:#c8a96e">&amp;</em> Partneriai</div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center">
+            <span style="font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,.35)">Praktikos sritys</span>
+            <span style="font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,.35)">Komanda</span>
+            <span style="font-size:0.5rem;background:#c8a96e;color:#0f1329;padding:5px 10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">Konsultacija</span>
+          </div>
+        </div>
+        <!-- HERO: navy + grid bg, gold eyebrow, Playfair headline, stat sidebar -->
+        <div style="background:#0f1329;position:relative;overflow:hidden">
+          <!-- grid lines -->
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(200,169,110,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,169,110,.04) 1px,transparent 1px);background-size:30px 30px;pointer-events:none"></div>
+          <!-- glow -->
+          <div style="position:absolute;top:-30%;right:-10%;width:60%;height:160%;background:radial-gradient(ellipse,rgba(200,169,110,.07) 0%,transparent 70%);pointer-events:none"></div>
+          <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:0;position:relative;z-index:1">
+            <!-- left: text -->
+            <div style="padding:20px 18px 16px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+                <div style="width:22px;height:1px;background:#c8a96e"></div>
+                <span style="font-size:0.46rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8a96e">Advokatų kontora · Vilnius</span>
+              </div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;line-height:1.05;color:white;margin-bottom:8px;letter-spacing:-0.01em">Teisinė<br>apsauga,<br><em style="color:#c8a96e">kurią galite<br>pasitikėti</em></div>
+              <div style="font-size:0.55rem;color:rgba(255,255,255,.35);line-height:1.6;margin-bottom:12px">25+ metų patirtis verslo teisės, NT ir tarptautinių ginčų srityse.</div>
+              <div style="display:flex;gap:7px">
+                <div style="background:#c8a96e;color:#0f1329;padding:7px 14px;font-size:0.52rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">Konsultacija</div>
+                <div style="border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.45);padding:6px 12px;font-size:0.52rem;letter-spacing:0.08em;text-transform:uppercase">Sritys →</div>
+              </div>
+            </div>
+            <!-- right: stat cards -->
+            <div style="display:flex;flex-direction:column;gap:1px;padding:20px 0 16px 0">
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.12);padding:10px 14px;display:flex;align-items:center;gap:10px;margin:0 0 1px 0">
+                <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#c8a96e;min-width:50px;line-height:1">25+</div>
+                <div style="font-size:0.52rem;color:rgba(255,255,255,.35);line-height:1.4"><strong style="display:block;color:rgba(255,255,255,.7);font-size:0.58rem">Metų patirtis</strong>Lietuvos ir ES rinkose</div>
+              </div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.12);padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:1px">
+                <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#c8a96e;min-width:50px;line-height:1">1.2k+</div>
+                <div style="font-size:0.52rem;color:rgba(255,255,255,.35);line-height:1.4"><strong style="display:block;color:rgba(255,255,255,.7);font-size:0.58rem">Sėkmingų bylų</strong>Versle, NT ir ginčuose</div>
+              </div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.12);padding:10px 14px;display:flex;align-items:center;gap:10px">
+                <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#c8a96e;min-width:50px;line-height:1">98%</div>
+                <div style="font-size:0.52rem;color:rgba(255,255,255,.35);line-height:1.4"><strong style="display:block;color:rgba(255,255,255,.7);font-size:0.58rem">Pasitenkinimas</strong>Grįžtamumo rodiklis</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- GOLD TRUST BAR -->
+        <div style="background:#c8a96e;padding:8px 18px;display:flex;gap:14px;align-items:center">
+          <span style="font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;color:#0f1329;font-weight:600;display:flex;align-items:center;gap:5px">✦ Verslo teisė</span>
+          <span style="font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;color:#0f1329;font-weight:600;display:flex;align-items:center;gap:5px">✦ Nekilnojamasis turtas</span>
+          <span style="font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;color:#0f1329;font-weight:600;display:flex;align-items:center;gap:5px">✦ Tarptautiniai ginčai</span>
+          <span style="font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;color:#0f1329;font-weight:600;display:flex;align-items:center;gap:5px">✦ Darbo teisė</span>
+        </div>
+        <!-- PRACTICE AREAS: dark cards with gold left border on hover -->
+        <div style="background:#0f1329;padding:14px 18px">
+          <div style="font-size:0.46rem;letter-spacing:0.2em;text-transform:uppercase;color:#c8a96e;margin-bottom:10px;display:flex;align-items:center;gap:8px"><span style="display:inline-block;width:18px;height:1px;background:#c8a96e"></span>Praktikos sritys</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
+            <div style="background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.1);padding:10px 12px;border-left:3px solid #c8a96e">
+              <div style="font-size:0.9rem;margin-bottom:5px">⚖️</div>
+              <div style="font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:700;color:white;margin-bottom:3px">Verslo teisė</div>
+              <div style="font-size:0.52rem;color:rgba(255,255,255,.3);line-height:1.4">Steigimas, sutartys, M&amp;A sandoriai</div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.1);padding:10px 12px;border-left:3px solid transparent">
+              <div style="font-size:0.9rem;margin-bottom:5px">🏛️</div>
+              <div style="font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:700;color:white;margin-bottom:3px">Nekilnojamasis turtas</div>
+              <div style="font-size:0.52rem;color:rgba(255,255,255,.3);line-height:1.4">Pirkimas, pardavimas, nuoma</div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.1);padding:10px 12px;border-left:3px solid transparent">
+              <div style="font-size:0.9rem;margin-bottom:5px">🌍</div>
+              <div style="font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:700;color:white;margin-bottom:3px">Tarptautiniai ginčai</div>
+              <div style="font-size:0.52rem;color:rgba(255,255,255,.3);line-height:1.4">Arbitražas, ES teismai</div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid rgba(200,169,110,.1);padding:10px 12px;border-left:3px solid transparent">
+              <div style="font-size:0.9rem;margin-bottom:5px">👔</div>
+              <div style="font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:700;color:white;margin-bottom:3px">Darbo teisė</div>
+              <div style="font-size:0.52rem;color:rgba(255,255,255,.3);line-height:1.4">Sutartys, atleidimai, ginčai</div>
+            </div>
+          </div>
+        </div>
+        <!-- FOOTER -->
+        <div style="background:#080b1a;padding:9px 18px;display:flex;justify-content:space-between;border-top:1px solid rgba(200,169,110,.08)">
+          <span style="font-family:'Playfair Display',serif;font-size:0.58rem;font-weight:700;color:white">Lex <span style="color:#c8a96e">&amp;</span> Partneriai</span>
+          <span style="font-size:0.48rem;color:rgba(255,255,255,.25)">Gedimino pr. 44A, Vilnius</span>
+        </div>
+      </div>
+      <div class="click-hint"><span>Peržiūrėti demo →</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Premium — Maket #1</div><div class="mockup-label-desc">Advokatų kontora — Lex &amp; Partneriai · pilna demonstracija</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website p">
+        <div style="position:relative;height:100%">
+          <div class="p-nav"><div class="p-logo">Agnė Jankutė</div><div class="p-nav-links"><span>Galerija</span><span>Apie mane</span><span>Kaina</span><span>Rezervuoti</span></div></div>
+          <div class="p-hero" style="height:290px">
+            <div class="p-hero-bg">
+              <!-- radial glow -->
+              <div style="position:absolute;top:-20%;right:-10%;width:70%;height:140%;background:radial-gradient(ellipse,rgba(200,160,80,.12) 0%,transparent 70%);pointer-events:none"></div>
+              <div class="p-bg-text" style="font-size:5rem;opacity:.06">MOMENTS</div>
+            </div>
+            <div class="p-content">
+              <div class="p-eyebrow">Vestuvių fotografė · Vilnius · Lietuva · EU</div>
+              <h3 style="font-size:1.9rem">Jūsų diena,<br>amžinai<br><em>prisiminta.</em></h3>
+              <div style="font-size:0.56rem;color:rgba(255,255,255,.3);line-height:1.5;margin-top:6px;max-width:240px">8+ metų patirtis. Fotografuoju Lietuvoje ir Europoje. Pilnas dieną — nuo pasiruošimo iki šventės pabaigos.</div>
+              <div style="display:flex;gap:10px;margin-top:12px">
+                <div style="background:#c8a060;color:#0e0c0a;padding:7px 16px;font-size:0.54rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Rezervuoti 2025</div>
+                <div class="p-cta" style="margin-top:7px">Galerija →</div>
+              </div>
+            </div>
+            <!-- floating availability badge -->
+            <div style="position:absolute;top:20px;right:20px;background:rgba(200,160,80,.12);border:1px solid rgba(200,160,80,.3);padding:8px 12px;z-index:4">
+              <div style="font-size:0.48rem;color:#c8a060;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:2px">2025 datos</div>
+              <div style="font-size:0.7rem;font-weight:600;color:white">Dar laisva!</div>
+            </div>
+          </div>
+          <div class="p-gallery" style="height:120px">
+            <div class="p-gal-a"><div class="p-gal-label">Ceremonija</div></div>
+            <div class="p-gal-b"><div class="p-gal-label">Portretai</div></div>
+            <div class="p-gal-c"><div class="p-gal-label">Šventė</div></div>
+          </div>
+          <div class="p-info">
+            <div class="p-info-item"><div class="p-info-num">8+</div><div class="p-info-lbl">Metų patirtis</div></div>
+            <div class="p-info-item"><div class="p-info-num">340</div><div class="p-info-lbl">Porų istorijų</div></div>
+            <div class="p-info-item"><div class="p-info-num">LT·EU</div><div class="p-info-lbl">Fotografuoja</div></div>
+            <div class="p-info-item"><div class="p-info-num">2025</div><div class="p-info-lbl">Laisvos datos</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Premium — Maket #2</div><div class="mockup-label-desc">Vestuvių fotografija — Kino estetika, šampano aukso spalvos</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website" style="background:#f8f8f4;font-family:'IBM Plex Sans',sans-serif">
+        <div style="background:#1a1a1a;padding:11px 20px;display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:0.9rem;font-weight:600;color:white">FORMA <span style="color:#a8c878;font-weight:300">Architektai</span></div>
+          <div style="display:flex;gap:14px"><span style="font-size:0.55rem;color:rgba(255,255,255,.4);letter-spacing:0.1em;text-transform:uppercase">Projektai</span><span style="font-size:0.55rem;color:rgba(255,255,255,.4);letter-spacing:0.1em;text-transform:uppercase">Komanda</span><span style="font-size:0.55rem;background:#a8c878;color:#1a1a1a;padding:4px 10px;font-weight:700">Kontaktai</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;height:200px">
+          <div style="background:#1a1a1a;padding:22px 20px;display:flex;flex-direction:column;justify-content:flex-end">
+            <div style="font-size:0.5rem;color:#a8c878;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:6px">Architektūra · Interjeras</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:white;line-height:1.05;margin-bottom:10px">Erdvės,<br>kurios<br>įkvepia</div>
+            <div style="display:inline-block;border:1px solid rgba(168,200,120,.4);color:#a8c878;padding:6px 14px;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase">Mūsų projektai</div>
+          </div>
+          <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px">
+            <div style="background:linear-gradient(135deg,#2a3a20,#3a5030)"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px"><div style="background:linear-gradient(135deg,#3a3020,#5a4830)"></div><div style="background:#f0ece4"></div></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #e8e4dc">
+          <div style="padding:12px 14px;border-right:1px solid #e8e4dc"><div style="font-size:0.5rem;color:#8a8878;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Projektų</div><div style="font-size:1.1rem;font-weight:300;color:#1a1a1a">340+</div></div>
+          <div style="padding:12px 14px;border-right:1px solid #e8e4dc"><div style="font-size:0.5rem;color:#8a8878;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Patirtis</div><div style="font-size:1.1rem;font-weight:300;color:#1a1a1a">20m.</div></div>
+          <div style="padding:12px 14px"><div style="font-size:0.5rem;color:#8a8878;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Apdovanojimai</div><div style="font-size:1.1rem;font-weight:300;color:#1a1a1a">15</div></div>
+        </div>
+        <!-- awards strip -->
+        <div style="background:#f5f3ef;padding:8px 16px;border-top:1px solid #e8e4dc;display:flex;gap:12px;align-items:center">
+          <span style="font-size:0.46rem;color:#5a5a48;letter-spacing:0.1em;text-transform:uppercase">🏆 Lietuvos Architektų Sąjunga 2023</span>
+          <span style="font-size:0.46rem;color:#5a5a48;letter-spacing:0.1em;text-transform:uppercase">· LT / EN</span>
+          <div style="margin-left:auto;background:#a8c878;color:#1a1a1a;padding:4px 10px;font-size:0.46rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em">Galerija →</div>
+        </div>
+        <div style="background:#1a1a1a;padding:10px 20px;display:flex;justify-content:space-between"><span style="font-size:0.52rem;color:rgba(255,255,255,.3)">© 2024 FORMA Architektai</span><span style="font-size:0.52rem;color:#a8c878">Vilnius · LT | EN</span></div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Premium — Maket #3</div><div class="mockup-label-desc">Architektai / Dizaineriai — Tamsus, žalia akcentais, galerijos stilius</div></div>
+    </div>
+    <div class="mockup-frame coming-soon">
+      <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
+      <div class="mock-website" style="background:#06090f;font-family:'IBM Plex Sans',sans-serif">
+        <div style="background:rgba(255,255,255,.03);padding:11px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(0,180,255,.08)">
+          <div style="display:flex;align-items:center;gap:7px"><div style="width:18px;height:18px;background:#00b4ff;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)"></div><div style="font-size:0.8rem;font-weight:600;color:white">LYRA<span style="color:#00b4ff">.ai</span></div></div>
+          <div style="display:flex;gap:14px;align-items:center"><span style="font-size:0.55rem;color:rgba(255,255,255,.3)">Produktas</span><span style="font-size:0.55rem;color:rgba(255,255,255,.3)">Kainodara</span><span style="font-size:0.55rem;background:rgba(0,180,255,.12);border:1px solid rgba(0,180,255,.3);color:#00b4ff;padding:4px 10px">Pradėti</span></div>
+        </div>
+        <div style="padding:18px 20px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:5px;font-size:0.48rem;color:#00b4ff;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:7px"><div style="width:5px;height:5px;background:#00b4ff;border-radius:50%"></div>Dirbtinis intelektas verslui</div>
+            <div style="font-size:1.2rem;font-weight:600;color:white;line-height:1.2;margin-bottom:6px">Automatizuokite<br><span style="color:#00b4ff">viską</span>, kas<br>gaišta laiką</div>
+            <div style="font-size:0.56rem;color:rgba(255,255,255,.35);line-height:1.6;margin-bottom:12px">Padedame Lietuvos įmonėms sutaupyti 40% darbo laiko.</div>
+            <div style="display:flex;gap:7px"><div style="background:#00b4ff;color:#06090f;padding:7px 14px;font-size:0.56rem;font-weight:700">Išbandyti 14d.</div><div style="border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);padding:7px 12px;font-size:0.56rem">Demo</div></div>
+          </div>
+          <div style="background:rgba(0,180,255,.04);border:1px solid rgba(0,180,255,.1);padding:10px;border-radius:4px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:0.5rem;color:rgba(255,255,255,.25);letter-spacing:0.12em;text-transform:uppercase">Sistemos apžvalga</span><span style="font-size:0.5rem;color:#00b4ff">● Gyvas</span></div>
+            <div style="display:flex;align-items:flex-end;gap:3px;height:50px;margin-bottom:8px"><div style="flex:1;background:rgba(0,180,255,.15);border-top:1px solid rgba(0,180,255,.4);height:30%"></div><div style="flex:1;background:rgba(0,180,255,.15);border-top:1px solid rgba(0,180,255,.4);height:50%"></div><div style="flex:1;background:rgba(0,180,255,.5);border-top:1px solid #00b4ff;height:85%"></div><div style="flex:1;background:rgba(0,180,255,.15);border-top:1px solid rgba(0,180,255,.4);height:60%"></div><div style="flex:1;background:rgba(0,180,255,.5);border-top:1px solid #00b4ff;height:95%"></div><div style="flex:1;background:rgba(0,180,255,.15);border-top:1px solid rgba(0,180,255,.4);height:70%"></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);padding:6px"><div style="font-size:0.82rem;font-weight:600;color:white">2.4k <span style="color:#00b4ff;font-size:0.52rem">↑12%</span></div><div style="font-size:0.46rem;color:rgba(255,255,255,.2);text-transform:uppercase;margin-top:2px">Automatizuota/mėn.</div></div><div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);padding:6px"><div style="font-size:0.82rem;font-weight:600;color:white">99.9<span style="color:#00b4ff;font-size:0.52rem">%</span></div><div style="font-size:0.46rem;color:rgba(255,255,255,.2);text-transform:uppercase;margin-top:2px">Pasiekiamumas</div></div></div>
+          </div>
+        </div>
+        <div style="background:rgba(0,180,255,.06);border-top:1px solid rgba(0,180,255,.12);padding:8px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:6px;height:6px;background:#00b4ff;border-radius:50%;animation:none;box-shadow:0 0 6px #00b4ff"></div><span style="font-size:0.48rem;color:#00b4ff;letter-spacing:0.1em;text-transform:uppercase">247 vartotojų dabar</span></div>
+          <div style="background:#00b4ff;color:#06090f;padding:5px 12px;font-size:0.5rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Pradėti nemokamai →</div>
+        </div>
+        <div style="background:rgba(0,180,255,.04);border-top:1px solid rgba(0,180,255,.08);padding:7px 18px;display:flex;justify-content:space-between"><span style="font-size:0.48rem;color:rgba(255,255,255,.2)">© 2024 Lyra Technologies UAB</span><span style="font-size:0.48rem;color:rgba(0,180,255,.35)">GDPR · EU duomenys</span></div>
+      </div>
+      <div class="click-hint"><span>Netrukus</span></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Premium — Maket #4</div><div class="mockup-label-desc">Technologijų startuolis — Futuristinis UI, žėrintis mėlynas</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="process-inner">
+    <div class="process-header">
+      <div><div class="section-label">Kaip tai veikia</div><h2>Nuo žinutės —<br>iki svetainės</h2></div>
+      <p>Jokių skambučių ar susitikimų. Parašykite mums Instagram žinutę, papasakokite apie savo verslą — mes padarome viską likusį.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-num">01</div><div class="step-title">Parašykite mums</div><div class="step-desc">Instagram žinutėje papasakokite apie savo verslą ir ko norite iš svetainės.</div></div>
+      <div class="process-step"><div class="step-num">02</div><div class="step-title">Pasirinkite maketą</div><div class="step-desc">Parodome dizaino pavyzdžius — jūs pasirenkate, kas patinka. Galite nurodyti numerį.</div></div>
+      <div class="process-step"><div class="step-num">03</div><div class="step-title">Kūrimas</div><div class="step-desc">Sukuriame svetainę su jūsų turiniu, logotipu ir kontaktais.</div></div>
+      <div class="process-step"><div class="step-num">04</div><div class="step-title">Paleidimas</div><div class="step-desc">Paleidžiame svetainę ir perduodame jums visišką prieigą.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio-section">
+  <div class="portfolio-inner">
+    <div class="portfolio-header">
+      <div class="section-label">Portfolio</div>
+      <h2>Čia galėtų būti<br>jūsų verslo svetainė</h2>
+      <p>Tapkite pirmaisiais mūsų klientais. Kiekviena vieta laukia verslo, kuriam reikia profesionalios interneto prezencijos.</p>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-slot">
+        <div class="slot-inner">
+          <div class="slot-icon">✦</div>
+          <div class="slot-label">Jūsų verslas čia</div>
+          <div class="slot-desc">Restoranas, kavinė, baras</div>
+          <div class="slot-tag">Starter nuo €150</div>
+        </div>
+      </div>
+      <div class="portfolio-slot">
+        <div class="slot-inner">
+          <div class="slot-icon">✦</div>
+          <div class="slot-label">Jūsų verslas čia</div>
+          <div class="slot-desc">Grožio studija, kirpykla, nagų salonas</div>
+          <div class="slot-tag">Starter nuo €150</div>
+        </div>
+      </div>
+      <div class="portfolio-slot slot-featured">
+        <div class="slot-inner">
+          <div class="slot-icon">✦</div>
+          <div class="slot-label">Jūsų verslas čia</div>
+          <div class="slot-desc">Architektai, dizaineriai, studijos</div>
+          <div class="slot-tag">Professional nuo €350</div>
+        </div>
+      </div>
+      <div class="portfolio-slot">
+        <div class="slot-inner">
+          <div class="slot-icon">✦</div>
+          <div class="slot-label">Jūsų verslas čia</div>
+          <div class="slot-desc">Sporto klubas, treneris, joga</div>
+          <div class="slot-tag">Starter nuo €150</div>
+        </div>
+      </div>
+      <div class="portfolio-slot slot-featured">
+        <div class="slot-inner">
+          <div class="slot-icon">✦</div>
+          <div class="slot-label">Jūsų verslas čia</div>
+          <div class="slot-desc">Advokatai, buhalteriai, konsultantai</div>
+          <div class="slot-tag">Premium nuo €700</div>
+        </div>
+      </div>
+      <div class="portfolio-slot">
+        <div class="slot-inner">
+          <div class="slot-icon">✦</div>
+          <div class="slot-label">Jūsų verslas čia</div>
+          <div class="slot-desc">Fotografai, videografai, kūrėjai</div>
+          <div class="slot-tag">Professional nuo €350</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="section-label" style="justify-content:center">Pradėkite šiandien</div>
+  <h2>Pasiruošę pritraukti<br>daugiau klientų?</h2>
+  <div class="hosting-callout"><strong>Pastaba dėl hostingo:</strong> Svetainės talpinimas (hostingas) nėra įtrauktas į paketo kainą. Tai atskirai kliento apmokamas mokestis hostingo tiekėjui (pvz. Hostinger) — paprastai ~€3–6/mėn. Mes padedame viską sutvarkyti ir įdiegti.</div>
+  <p>Parašykite mums Instagram žinutę — papasakokite apie savo verslą, nurodykite norimą stilių ar maketų numerį, ir mes imsimės darbo.</p>
+  <div class="cta-actions">
+    <a href="https://instagram.com" class="btn-gold" target="_blank">Rašyti Instagram žinutę</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo">Web<span>Studio</span></span>
+        <p>Kuriame profesionalias svetaines Lietuvos verslams. Nuo mažų parduotuvių iki didelių korporacijų.</p>
+        <p class="footer-hosting">* Hostingas apmokamas kliento atskirai (~€3–6/mėn.)</p>
+      </div>
+      <div class="footer-col"><h5>Paketai</h5><ul><li><a href="#packages">Starter — €150</a></li><li><a href="#packages">Professional — €350</a></li><li><a href="#packages">Premium — €700</a></li></ul></div>
+      <div class="footer-col"><h5>Navigacija</h5><ul><li><a href="#packages">Kainodara</a></li><li><a href="#mockup-viewer">Pavyzdžiai</a></li><li><a href="#process">Procesas</a></li><li><a href="#contact">Susisiekti</a></li></ul></div>
+      <div class="footer-col"><h5>Susisiekti</h5><ul><li><a href="https://instagram.com" target="_blank">Instagram</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 WebStudio. Visos teisės saugomos.</span><span>Sukurta su ❤️ Lietuvai</span></div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.package-card,.process-step,.testimonial-card,.mockup-frame').forEach(el => {
+  el.style.opacity='0'; el.style.transform='translateY(24px)'; el.style.transition='opacity .6s ease,transform .6s ease';
+  observer.observe(el);
+});
+</script>
+
+<!-- Coming soon modal -->
+<div class="demo-modal" id="demoModal">
+  <div class="demo-modal-box">
+    <div class="demo-modal-icon">🚀</div>
+    <div class="demo-modal-title">Pilnas demo — jau greitai</div>
+    <div class="demo-modal-text">Šio maketo pilna demonstracinė svetainė šiuo metu kuriama. Susisiekite su mumis Instagram ir parodysime viską tiesiogiai!</div>
+    <button class="demo-modal-close" onclick="document.getElementById('demoModal').classList.remove('open')">Uždaryti</button>
+  </div>
+</div>
+<script>
+function showComingSoon(

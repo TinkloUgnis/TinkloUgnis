@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skonis & Tradicija — Restoranas Vilniuje</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brown-dark:#1c0f00;--brown:#2a1500;--amber:#e8c878;--amber-light:#f0d898;--cream:#faf6f0;--muted:#a08060;--rust:#c07030;--border:#e8dcc8;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--brown-dark);overflow-x:hidden;}
+nav{position:fixed;top:0;width:100%;z-index:100;background:var(--brown-dark);display:flex;justify-content:space-between;align-items:center;padding:14px 60px;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;font-style:italic;color:var(--amber);letter-spacing:0.08em;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{text-decoration:none;color:rgba(232,200,120,.55);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--amber);}
+.nav-cta{background:var(--amber)!important;color:var(--brown-dark)!important;padding:9px 22px;font-weight:700!important;}
+.nav-cta:hover{background:var(--amber-light)!important;}
+.announce{background:var(--amber);padding:7px 60px;text-align:center;margin-top:52px;}
+.announce span{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--brown-dark);font-weight:600;}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 52px - 34px);}
+.hero-left{background:var(--brown);display:flex;flex-direction:column;justify-content:center;padding:70px 60px;}
+.hero-eyebrow{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,200,120,.5);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--amber);flex-shrink:0;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,5.5rem);font-weight:600;line-height:1.0;color:var(--cream);margin-bottom:22px;}
+.hero-h1 em{font-style:italic;color:var(--amber);display:block;}
+.hero-desc{font-size:0.92rem;color:rgba(250,246,240,.45);line-height:1.8;max-width:380px;margin-bottom:18px;}
+.hero-hours{display:flex;gap:28px;margin-bottom:42px;}
+.hero-hours-item{font-size:0.75rem;color:rgba(250,246,240,.5);}
+.hero-hours-item strong{display:block;color:var(--amber);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px;}
+.hero-btn{display:inline-block;background:var(--amber);color:var(--brown-dark);padding:15px 36px;font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .2s;}
+.hero-btn:hover{background:var(--amber-light);transform:translateY(-2px);}
+.hero-right{background:linear-gradient(160deg,#5c3010 0%,#8c4820 40%,#4a2008 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.hero-right-text{font-family:'Cormorant Garamond',serif;font-size:12rem;font-weight:400;color:rgba(232,200,120,.05);line-height:1;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;user-select:none;}
+.hero-badge{position:absolute;bottom:44px;left:36px;background:var(--cream);padding:18px 24px;box-shadow:0 16px 50px rgba(0,0,0,.25);}
+.hero-badge-label{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.hero-badge-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--brown-dark);}
+.hero-rating{position:absolute;top:44px;right:44px;text-align:center;}
+.hero-rating-num{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:400;color:var(--amber);line-height:1;}
+.hero-rating-stars{color:var(--amber);font-size:0.8rem;letter-spacing:3px;margin:5px 0 3px;}
+.hero-rating-label{font-size:0.58rem;color:rgba(250,246,240,.35);letter-spacing:0.1em;text-transform:uppercase;}
+.stats-strip{background:var(--cream);border-top:1px solid var(--border);padding:20px 60px;display:flex;gap:0;}
+.stat-item{flex:1;text-align:center;border-right:1px solid var(--border);padding:4px 0;}
+.stat-item:last-child{border-right:none;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--rust);line-height:1;}
+.stat-lbl{font-size:0.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:3px;}
+.menu-section{padding:100px 60px;background:var(--cream);}
+.menu-inner{max-width:1100px;margin:0 auto;}
+.section-eyebrow{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.section-eyebrow::before{content:'';width:24px;height:1px;background:var(--rust);flex-shrink:0;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,3.5vw,3.4rem);font-weight:600;color:var(--brown-dark);margin-bottom:50px;line-height:1.1;}
+.section-title em{font-style:italic;color:var(--rust);}
+.menu-cats{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap;}
+.menu-cat{padding:9px 22px;border:1px solid var(--border);font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;color:var(--muted);background:transparent;font-family:'DM Sans',sans-serif;}
+.menu-cat.active,.menu-cat:hover{background:var(--brown-dark);color:var(--cream);border-color:var(--brown-dark);}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);}
+.menu-item{padding:24px 28px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);transition:background .2s;}
+.menu-item:nth-child(even){border-right:none;}
+.menu-item:nth-last-child(-n+2){border-bottom:none;}
+.menu-item:hover{background:white;}
+.menu-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;}
+.menu-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--brown-dark);}
+.menu-price{font-size:0.95rem;font-weight:600;color:var(--rust);}
+.menu-desc{font-size:0.8rem;color:var(--muted);line-height:1.55;}
+.menu-note{text-align:center;margin-top:28px;font-size:0.8rem;color:var(--muted);font-style:italic;}
+.specials{background:var(--brown-dark);padding:80px 60px;}
+.specials-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.specials-eyebrow{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,200,120,.5);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.specials-eyebrow::before{content:'';width:24px;height:1px;background:var(--amber);flex-shrink:0;}
+.specials-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,3.5vw,3.4rem);font-weight:600;color:var(--cream);margin-bottom:16px;line-height:1.1;}
+.specials-title em{font-style:italic;color:var(--amber);}
+.specials-text p{color:rgba(250,246,240,.4);font-size:0.92rem;line-height:1.8;margin-bottom:36px;}
+.specials-btn{display:inline-block;background:var(--amber);color:var(--brown-dark);padding:15px 34px;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+.specials-btn:hover{background:var(--amber-light);}
+.specials-cards{display:flex;flex-direction:column;gap:2px;}
+.special-card{background:rgba(255,255,255,.04);border:1px solid rgba(232,200,120,.12);padding:22px 24px;display:flex;align-items:center;gap:20px;transition:background .3s;}
+.special-card:hover{background:rgba(232,200,120,.07);}
+.special-day{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);min-width:90px;}
+.special-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);flex:1;}
+.special-price{font-size:1rem;font-weight:700;color:var(--amber);}
+.contact{padding:100px 60px;background:#f5f0e8;}
+.contact-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.contact-text p{font-size:0.92rem;color:var(--muted);line-height:1.8;margin-bottom:32px;}
+.contact-details{display:flex;flex-direction:column;gap:16px;}
+.contact-item{display:flex;align-items:flex-start;gap:14px;font-size:0.85rem;color:var(--muted);line-height:1.6;}
+.contact-item-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.contact-form{background:white;padding:48px;border:1px solid var(--border);}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--brown-dark);margin-bottom:6px;}
+.form-subtitle{font-size:0.8rem;color:var(--muted);margin-bottom:28px;}
+.form-group{margin-bottom:18px;}
+.form-label{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:block;}
+.form-input,.form-select{width:100%;padding:13px 16px;background:var(--cream);border:1px solid var(--border);color:var(--brown-dark);font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;transition:border-color .2s;appearance:none;}
+.form-input:focus,.form-select:focus{border-color:var(--rust);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-submit{width:100%;padding:15px;background:var(--brown-dark);color:var(--cream);border:none;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:background .2s;}
+.form-submit:hover{background:var(--rust);}
+footer{background:var(--brown-dark);padding:50px 60px 36px;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;margin-bottom:40px;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;font-style:italic;color:var(--amber);display:block;margin-bottom:14px;}
+.footer-brand p{font-size:0.8rem;color:rgba(250,246,240,.3);line-height:1.7;max-width:280px;}
+.footer-col h5{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:18px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:10px;}
+.footer-col a{text-decoration:none;color:rgba(250,246,240,.35);font-size:0.82rem;transition:color .2s;}
+.footer-col a:hover{color:var(--amber);}
+.footer-bottom{border-top:1px solid rgba(232,200,120,.1);padding-top:24px;display:flex;justify-content:space-between;}
+.footer-bottom span{font-size:0.75rem;color:rgba(250,246,240,.25);}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:768px){nav{padding:14px 24px;}.nav-links{display:none;}.announce{padding:7px 24px;}.hero{grid-template-columns:1fr;}.hero-left{padding:80px 24px 60px;}.hero-right{height:300px;}.stats-strip,.menu-section,.contact{padding:60px 24px;}.specials{padding:60px 24px;}.specials-inner{grid-template-columns:1fr;gap:40px;}.contact-inner{grid-template-columns:1fr;gap:40px;}.menu-grid{grid-template-columns:1fr;}.menu-item{border-right:none;}.menu-item:nth-last-child(-n+2){border-bottom:1px solid var(--border);}.menu-item:last-child{border-bottom:none;}.form-grid{grid-template-columns:1fr;}footer{padding:40px 24px 28px;}.footer-top{grid-template-columns:1fr;gap:32px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">Skonis & Tradicija</div>
+  <div class="nav-links">
+    <a href="#meniu">Meniu</a>
+    <a href="#savaitgalis">Savaitgalis</a>
+    <a href="#kontaktai">Kontaktai</a>
+    <a href="#kontaktai" class="nav-cta">Rezervuoti</a>
+  </div>
+</nav>
+<div class="announce"><span>✦ Šiandien: Šefų meniu už €29 · Rezervuokite iki 18:00</span></div>
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Vilnius · Pilies g. · nuo 2018</div>
+    <h1 class="hero-h1">Tikras<br>lietuviškas<br><em>skonis</em></h1>
+    <p class="hero-desc">Tradiciniai receptai, perduodami iš kartos į kartą. Šiuolaikiškas patiekimas, jaukia atmosfera ir širdinga šeimyninė aplinka Vilniaus senamiestyje.</p>
+    <div class="hero-hours">
+      <div class="hero-hours-item"><strong>I–V</strong>12:00–22:00</div>
+      <div class="hero-hours-item"><strong>Š–S</strong>11:00–23:00</div>
+    </div>
+    <a href="#kontaktai" class="hero-btn">Rezervuoti stalą</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-text">SKONIS</div>
+    <div class="hero-badge"><div class="hero-badge-label">Nuo 2018</div><div class="hero-badge-text">Vilniaus senamiestis</div></div>
+    <div class="hero-rating"><div class="hero-rating-num">4.9</div><div class="hero-rating-stars">★★★★★</div><div class="hero-rating-label">340+ atsiliepimų</div></div>
+  </div>
+</section>
+<div class="stats-strip">
+  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-lbl">Google</div></div>
+  <div class="stat-item"><div class="stat-num">340+</div><div class="stat-lbl">Atsiliepimų</div></div>
+  <div class="stat-item"><div class="stat-num">6m.</div><div class="stat-lbl">Patirtis</div></div>
+  <div class="stat-item"><div class="stat-num">12+</div><div class="stat-lbl">Tradicinių patiekalų</div></div>
+</div>
+<section class="menu-section" id="meniu">
+  <div class="menu-inner">
+    <div class="section-eyebrow reveal">Mūsų virtuvė</div>
+    <h2 class="section-title reveal">Populiariausi<br><em>patiekalai</em></h2>
+    <div class="menu-cats reveal">
+      <button class="menu-cat active">Visi</button>
+      <button class="menu-cat">Pirmieji patiekalai</button>
+      <button class="menu-cat">Pagrindiniai</button>
+      <button class="menu-cat">Užkandžiai</button>
+      <button class="menu-cat">Desertai</button>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item"><div class="menu-top"><span class="menu-name">Cepelinai</span><span class="menu-price">€9.50</span></div><div class="menu-desc">Bulvių koldūnai su mėsos įdaru, spirgučiais ir grietine. Kepami pagal tradicinį receptą.</div></div>
+      <div class="menu-item"><div class="menu-top"><span class="menu-name">Šaltibarščiai</span><span class="menu-price">€6.00</span></div><div class="menu-desc">Šaltas burokėlių sriuba su kiaušiniu ir bulvyte. Vasaros klasika, tiekiama šalta.</div></div>
+      <div class="menu-item"><div class="menu-top"><span class="menu-name">Kugelis</span><span class="menu-price">€8.00</span></div><div class="menu-desc">Bulvių plokštainis su spirgučiais ir grietine. Kepamas krosnyje pagal senelės receptą.</div></div>
+      <div class="menu-item"><div class="menu-top"><span class="menu-name">Žemaičių blynai</span><span class="menu-price">€7.50</span></div><div class="menu-desc">Bulvių blynai su varške ir grietine. Traškūs išorėje, minkšti viduje.</div></div>
+      <div class="menu-item"><div class="menu-top"><span class="menu-name">Kepta duona su česnaku</span><span class="menu-price">€4.50</span></div><div class="menu-desc">Traškios rugių duonos lazdelės su česnako sviestu ir krapais.</div></div>
+      <div class="menu-item"><div class="menu-top"><span class="menu-name">Šaltiena</span><span class="menu-price">€8.50</span></div><div class="menu-desc">Naminis kiaulienos galiuškas su krienais ir garstyčiomis. Tradiciškai patiekiamas šaltas.</div></div>
+      <div class="menu-item"><div class="menu-top"><span class="menu-name">Kastinys su duona</span><span class="menu-price">€5.50</span></div><div class="menu-desc">Tradicinis žemaitiškas kastinys su česnaku ir juoda duona.</div></div>
+      <div class="menu-item"><div class="menu-top"><span class="menu-name">Bulviniai blynai su lašiša</span><span class="menu-price">€12.00</span></div><div class="menu-desc">Traškūs bulviniai blynai su sūdyta lašiša ir kreminiu padažu.</div></div>
+    </div>
+    <p class="menu-note reveal">🍽 Visą meniu rasite mus aplankę arba paskambinę. Priimame užsakymus grupinėms vakarienėms.</p>
+  </div>
+</section>
+<div class="specials" id="savaitgalis">
+  <div class="specials-inner">
+    <div class="specials-text">
+      <div class="specials-eyebrow">Savaitgalinis meniu</div>
+      <h2 class="specials-title">Ypatingi<br><em>pasiūlymai</em></h2>
+      <p>Kiekvieną savaitgalį šventinė atmosfera, gyvoji muzika ir specialūs šefo pasiūlymai.</p>
+      <a href="#kontaktai" class="specials-btn">Rezervuoti savaitgalio stalą</a>
+    </div>
+    <div class="specials-cards">
+      <div class="special-card"><div class="special-day">Šeštadienis</div><div class="special-name">Šefo degustacinis meniu</div><div class="special-price">€45</div></div>
+      <div class="special-card"><div class="special-day">Sekmadienis</div><div class="special-name">Šeimos pusryčiai</div><div class="special-price">€18</div></div>
+      <div class="special-card"><div class="special-day">Kasdien</div><div class="special-name">Verslo pietūs (12–15h)</div><div class="special-price">€12</div></div>
+    </div>
+  </div>
+</div>
+<section class="contact" id="kontaktai">
+  <div class="contact-inner">
+    <div class="contact-text">
+      <div class="section-eyebrow reveal">Kontaktai ir rezervacija</div>
+      <h2 class="section-title reveal">Rezervuokite<br>savo <em>stalą</em></h2>
+      <p class="reveal">Laukiame jūsų kasdien nuo pietų iki vakaro. Norite ateiti su grupe ar švęsti ypatingą progą? Susisiekite iš anksto — pasirūpinsime viskuo.</p>
+      <div class="contact-details">
+        <div class="contact-item reveal"><span class="contact-item-icon">📍</span>Pilies g. 28, Vilnius · Senamiestis</div>
+        <div class="contact-item reveal"><span class="contact-item-icon">🕐</span>I–V 12:00–22:00 · Š–S 11:00–23:00</div>
+        <div class="contact-item reveal"><span class="contact-item-icon">📞</span>+370 600 00 000</div>
+        <div class="contact-item reveal"><span class="contact-item-icon">💳</span>Priimame korteles ir grynuosius</div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-title">Rezervacijos forma</div>
+      <div class="form-subtitle">Atsakome per kelias valandas</div>
+      <div class="form-group"><label class="form-label">Vardas ir pavardė</label><input type="text" class="form-input" placeholder="Jūsų vardas"></div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Telefonas</label><input type="tel" class="form-input" placeholder="+370"></div>
+        <div class="form-group"><label class="form-label">Asmenų skaičius</label><select class="form-select"><option>1–2 asmenys</option><option>3–4 asmenys</option><option>5–8 asmenys</option><option>9+ asmenys</option></select></div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Data</label><input type="date" class="form-input"></div>
+        <div class="form-group"><label class="form-label">Laikas</label><select class="form-select"><option>12:00</option><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option>18:00</option><option>19:00</option><option>20:00</option><option>21:00</option></select></div>
+      </div>
+      <div class="form-group"><label class="form-label">Pastabos (neprivaloma)</label><input type="text" class="form-input" placeholder="Alergijos, proga, pageidavimai..."></div>
+      <button class="form-submit">Siųsti rezervaciją</button>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand"><span class="footer-logo">Skonis & Tradicija</span><p>Tradicinė lietuviška virtuvė Vilniaus senamiestyje. Atidaryti nuo 2018 metų.</p></div>
+      <div class="footer-col"><h5>Navigacija</h5><ul><li><a href="#meniu">Meniu</a></li><li><a href="#savaitgalis">Savaitgalis</a></li><li><a href="#kontaktai">Kontaktai</a></li><li><a href="#kontaktai">Rezervacija</a></li></ul></div>
+      <div class="footer-col"><h5>Darbo laikas</h5><ul><li><a href="#">I–V: 12:00–22:00</a></li><li><a href="#">Šeštadienis: 11:00–23:00</a></li><li><a href="#">Sekmadienis: 11:00–23:00</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 Skonis & Tradicija · Vilnius</span><span>Pilies g. 28, Senamiestis</span></div>
+  </div>
+</footer>
+<script>
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+document.querySelectorAll('.menu-cat').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.menu-cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');});});
+document.querySelectorAll('.menu-grid').forEach(grid=>{Array.from(grid.children).forEach((child,i)=>{child.style.transitionDelay=(i*0.07)+'s';child.classList.add('reveal');observer.observe(child);});});
+</script>
+</body>
+</html>
