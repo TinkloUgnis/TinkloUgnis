@@ -14,6 +14,7 @@ function showTier(tier) {
   const tierMap = { starter: 0, medium: 1, premium: 2 };
   if (tabs[tierMap[tier]]) tabs[tierMap[tier]].classList.add('active');
   document.getElementById('mockup-viewer').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(scaleMockWebsites, 50);
 }
 </script>
 <style>
@@ -27,7 +28,7 @@ function showTier(tier) {
   --steel: #2a3a52;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+html { scroll-behavior:smooth; overflow-x:hidden; }
 body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); overflow-x:hidden; }
 
 nav { position:fixed; top:0; width:100%; z-index:100; padding:20px 60px; display:flex; justify-content:space-between; align-items:center; background:rgba(245,240,232,0.92); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
@@ -141,6 +142,10 @@ h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3.2rem); f
 .mockup-label { background:#111; padding:16px 20px; border-top:1px solid rgba(255,255,255,.05); }
 .mockup-label-tier { font-size:0.7rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
 .mockup-label-desc { font-size:0.82rem; color:rgba(245,240,232,.5); }
+.mockup-tap-badge { display:none; margin-top:12px; background:var(--gold); color:var(--ink); font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:11px 16px; border-radius:2px; text-align:center; }
+@media(max-width:900px){
+  .mockup-frame:not(.coming-soon) .mockup-tap-badge { display:block; }
+}
 
 /* STARTER 1 — RESTAURANT */
 .r { background:#faf6f0; font-family:'Cormorant Garamond',serif; }
@@ -490,16 +495,85 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
 .hero-content { animation:fadeUp .8s ease both; }
 .hero-visual { animation:fadeUp .8s ease .2s both; }
 
+/* ── HAMBURGER ── */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:200;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s,opacity .3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-nav{display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(245,240,232,.98);backdrop-filter:blur(16px);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{text-decoration:none;color:var(--ink);font-size:1.3rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;transition:color .2s;}
+.mobile-nav a:hover{color:var(--gold);}
+.mobile-nav-cta{background:var(--ink);color:var(--cream)!important;padding:14px 32px;border-radius:2px;font-size:1rem!important;}
+
 @media(max-width:900px){
-  nav{padding:16px 24px} nav ul{display:none}
-  .hero{padding:100px 24px 60px} .hero-grid{grid-template-columns:1fr;gap:40px} .hero-visual{height:300px}
-  section{padding:70px 24px}
-  .packages-header,.process-header{flex-direction:column;gap:20px;align-items:flex-start}
-  .packages-grid,.testimonials-grid{grid-template-columns:1fr}
-  .process-steps{grid-template-columns:1fr 1fr}
-  .footer-grid{grid-template-columns:1fr 1fr;gap:30px}
-  .stats-strip{gap:30px;flex-wrap:wrap;padding:24px}
-  .mockups-display{grid-template-columns:1fr}
+  nav{padding:16px 24px;}
+  nav ul{display:none;}
+  .hamburger{display:flex;}
+
+  .hero{padding:100px 24px 60px;}
+  .hero-grid{grid-template-columns:1fr;gap:40px;}
+  .hero-visual{display:none;}
+
+  section{padding:70px 24px;}
+  .packages-header,.process-header{flex-direction:column;gap:20px;align-items:flex-start;}
+  .packages-grid,.testimonials-grid{grid-template-columns:1fr;}
+  .process-steps{grid-template-columns:1fr 1fr;}
+  .process-steps::before{display:none;}
+  .portfolio-grid{grid-template-columns:1fr 1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:30px;}
+  .stats-strip{gap:30px;flex-wrap:wrap;padding:24px;}
+  .mockups-display{grid-template-columns:1fr!important;}
+
+  /* mockup viewer section */
+  #mockup-viewer{padding:60px 24px 80px;}
+  .viewer-header{flex-direction:column;align-items:flex-start;gap:20px;}
+  .tier-tabs{width:100%;}
+  .tier-tab{flex:1;text-align:center;padding:10px 8px;}
+
+  /* scale down mini-site previews so inner content never overflows */
+  .mock-website{overflow:hidden;}
+  .mock-website > *{transform-origin:top left;}
+
+  /* cta circle is 600px wide — clip it */
+  .cta-section{overflow:hidden;}
+}
+
+@media(max-width:700px){
+  /* At this width each mockup frame is roughly 600px wide — scale inner content to fit */
+  .mock-website{transform-origin:top left;position:relative;}
+}
+
+@media(max-width:520px){
+  .portfolio-grid{grid-template-columns:1fr;}
+  .process-steps{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;gap:24px;}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
+  .stats-strip{flex-direction:column;gap:16px;}
+  .hero-btns{flex-direction:column;align-items:flex-start;gap:12px;}
+  .slot-inner{padding:36px 24px;}
+  .cta-section{padding:80px 24px;}
+  .portfolio-section{padding:70px 24px;}
+  .testimonials{padding:70px 24px;}
+  .tier-tabs{flex-wrap:wrap;}
+
+  /* shrink the mock-website previews on very small phones */
+  .mock-website{height:380px;}
+  .r-hero-left h3{font-size:1.4rem;}
+  .g-hero-main h3{font-size:2rem;}
+  .g-side{display:none;}
+  .g-hero{grid-template-columns:1fr;}
+  .r-hero{height:auto;}
+  .r-hero-left{min-height:160px;}
+  .b-hero-left h3{font-size:1.4rem;}
+
+  /* hide nav links inside mini-previews — they overflow */
+  .r-nav-links,.g-nav-links,.b-nav-links,.a-nav-links,.l-nav-links,.p-nav-links,
+  .t3-nav-links,.t4-nav-links,.t5-nav-links,.t6-nav-links{display:none;}
+
+  /* prevent large decorative text from escaping */
+  .hero-right-text,.hero-big-text,.p-bg-text{display:none;}
 }
 </style>
 </head>
@@ -513,7 +587,14 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
     <li><a href="#process">Procesas</a></li>
     <li><a href="#contact" class="nav-cta">Susisiekti</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Atidaryti meniu"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#packages" onclick="closeMobileNav()">Paketai</a>
+  <a href="#mockup-viewer" onclick="closeMobileNav()">Pavyzdžiai</a>
+  <a href="#process" onclick="closeMobileNav()">Procesas</a>
+  <a href="#contact" class="mobile-nav-cta" onclick="closeMobileNav()">Susisiekti</a>
+</div>
 
 <section class="hero">
   <div class="hero-bg"></div>
@@ -637,7 +718,7 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
   </div>
 
   <!-- STARTER — 4 mockups -->
-  <div class="mockups-display mockup-tier active" id="tier-starter" style="grid-template-columns:1fr 1fr">
+  <div class="mockups-display mockup-tier active" id="tier-starter">
     <div class="mockup-frame" onclick="window.open('demo-starter-restaurant.html','_blank')">
       <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
       <div class="mock-website r">
@@ -677,7 +758,7 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
         <div class="r-footer"><span>© 2024 Skonis &amp; Tradicija</span><span>Vilnius, Pilies g. 28</span></div>
       </div>
       <div class="click-hint"><span>Peržiūrėti demo →</span></div>
-      <div class="mockup-label"><div class="mockup-label-tier">Starter — Maket #1</div><div class="mockup-label-desc">Restoranas / Kavinė — Šiltas, klasikinis dizainas</div></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Starter — Maket #1</div><div class="mockup-label-desc">Restoranas / Kavinė — Šiltas, klasikinis dizainas</div><div class="mockup-tap-badge">👆 Palieskite norėdami atidaryti demo</div></div>
     </div>
     <div class="mockup-frame coming-soon">
       <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
@@ -860,7 +941,7 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
   </div>
 
   <!-- PROFESSIONAL — 4 mockups -->
-  <div class="mockups-display mockup-tier" id="tier-medium" style="grid-template-columns:1fr 1fr">
+  <div class="mockups-display mockup-tier" id="tier-medium">
     <div class="mockup-frame" onclick="window.open('demo-professional-beauty.html','_blank')">
       <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
       <div class="mock-website" style="background:#fdf8f5;font-family:'Cormorant Garamond',serif;overflow:hidden">
@@ -927,7 +1008,7 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
         </div>
       </div>
       <div class="click-hint"><span>Peržiūrėti demo →</span></div>
-      <div class="mockup-label"><div class="mockup-label-tier">Professional — Maket #1</div><div class="mockup-label-desc">Grožio studija — Žiedas &amp; Ko. · pilna demonstracija</div></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Professional — Maket #1</div><div class="mockup-label-desc">Grožio studija — Žiedas &amp; Ko. · pilna demonstracija</div><div class="mockup-tap-badge">👆 Palieskite norėdami atidaryti demo</div></div>
     </div>
     <div class="mockup-frame coming-soon">
       <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
@@ -1146,7 +1227,7 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
   </div>
 
   <!-- PREMIUM — 4 mockups -->
-  <div class="mockups-display mockup-tier" id="tier-premium" style="grid-template-columns:1fr 1fr">
+  <div class="mockups-display mockup-tier" id="tier-premium">
     <div class="mockup-frame" onclick="window.open('demo-premium-lawfirm.html','_blank')">
       <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
       <div class="mock-website" style="background:#0f1329;font-family:'IBM Plex Sans',sans-serif;overflow:hidden;position:relative">
@@ -1239,7 +1320,7 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
         </div>
       </div>
       <div class="click-hint"><span>Peržiūrėti demo →</span></div>
-      <div class="mockup-label"><div class="mockup-label-tier">Premium — Maket #1</div><div class="mockup-label-desc">Advokatų kontora — Lex &amp; Partneriai · pilna demonstracija</div></div>
+      <div class="mockup-label"><div class="mockup-label-tier">Premium — Maket #1</div><div class="mockup-label-desc">Advokatų kontora — Lex &amp; Partneriai · pilna demonstracija</div><div class="mockup-tap-badge">👆 Palieskite norėdami atidaryti demo</div></div>
     </div>
     <div class="mockup-frame coming-soon">
       <div class="mock-browser"><div class="mbdot"></div><div class="mbdot"></div><div class="mbdot"></div><div class="mock-url-bar"></div></div>
@@ -1451,6 +1532,11 @@ footer { background:#080808; color:rgba(245,240,232,.4); padding:60px 60px 40px;
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const hamburger=document.getElementById('hamburger');
+const mobileNav=document.getElementById('mobileNav');
+hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileNav.classList.toggle('open');document.body.style.overflow=mobileNav.classList.contains('open')?'hidden':'';});
+function closeMobileNav(){hamburger.classList.remove('open');mobileNav.classList.remove('open');document.body.style.overflow='';}
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
@@ -1460,6 +1546,31 @@ document.querySelectorAll('.package-card,.process-step,.testimonial-card,.mockup
   el.style.opacity='0'; el.style.transform='translateY(24px)'; el.style.transition='opacity .6s ease,transform .6s ease';
   observer.observe(el);
 });
+
+// Scale down mini-site previews so inner content fits without overflowing
+function scaleMockWebsites(){
+  document.querySelectorAll('.mock-website').forEach(function(el){
+    var designW = 540;
+    var frame = el.parentElement;
+    var actual = frame ? frame.clientWidth : el.clientWidth;
+    if(actual > 0 && actual < designW){
+      var s = actual / designW;
+      var designH = 500;
+      el.style.cssText = [
+        'transform:scale('+s+')',
+        'transform-origin:top left',
+        'width:'+designW+'px',
+        'height:'+designH+'px',
+        'margin-bottom:'+((designH*s)-designH)+'px',
+        'overflow:hidden'
+      ].join(';');
+    } else {
+      el.style.cssText = 'overflow:hidden';
+    }
+  });
+}
+scaleMockWebsites();
+window.addEventListener('resize', scaleMockWebsites);
 </script>
 
 <!-- Coming soon modal -->
